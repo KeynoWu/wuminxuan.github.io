@@ -1,29 +1,70 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Hank Quinlan, Horrible Cop</title>
-        <link rel="stylesheet" type="text/css" href="/css/main.css">
-    </head>
-    <body>
-        <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/cv">CV</a></li>
-                <li><a href="/blog">Blog</a></li>
-            </ul>
-        </nav>
-        <div class="container">
-            <div class="blurb">
-                <h1>Hi there, I'm Hank Quinlan!</h1>
-                <p>I'm best known as the horrible cop from <em>A Touch of Evil</em> Don't trust me. <a href="/about">Read more about my life...</a></p>
-            </div><!-- /.blurb -->
-        </div><!-- /.container -->
-        <footer>
-            <ul>
-                <li><a href="mailto:hankquinlanhub@gmail.com">email</a></li>
-                <li><a href="https://github.com/hankquinlan">github.com/hankquinlan</a></li>
-            </ul>
-        </footer>
-    </body>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ANSON思维首页</title>
+    <meta name="keywords" content="ANSON">
+    <meta name="description" content="ANSON思维">
+    <meta http_equiv="pragma" content="no-cache">
+    <meta http_equiv="Cache-Control" content="no-cache, must-revalidate">
+    <link rel="shortcut icon" href="../images/logo.ico">
+    <link rel="icon" href="../images/logo.ico">
+    <link rel="stylesheet" type="text/css" href="css/global.css">
+    <link rel="stylesheet" type="text/css" href="css/index.css"/>
+</head>
+
+<body>	
+    <!-- 内容 -->
+    <div class="index-content">
+      	<div class="slogan">
+      		我不怕千万人阻挡，只怕自己投降。
+      	</div>
+      	<div class="menu-cont">
+      		<ul class="clearfix">
+      			<li class="pull-left" id="code">
+      				<div class="menu-img">
+      					<img src="img/icon-apple.jpg"/>
+      				</div>
+      				<div class="menu-msg">
+      					code
+      				</div>
+      			</li>
+      			<li class="pull-left" id="poem">
+      				<div class="menu-img">
+      					<img src="img/icon-apple.jpg"/>
+      				</div>
+      				<div class="menu-msg">
+      					poem
+      				</div>
+      			</li>
+      		</ul>
+      	</div>
+	</div>
+
+</body>
+<!-- 资源加载 -->
+<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+<!-- 业务逻辑 -->
+<script src="js/global.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+				var screenWidth = $("body").width(),
+					screenHeight = $(window).height() || document.body.screenHeight,
+					scrollTop = $(window).scrollTop()
+				$(".index-content").css('height', screenHeight);
+				console.log(screenHeight);
+
+});
+	$("#code").click(function(){
+		if($(".index-content").hasClass("index-content-left")){
+			$(".index-content").removeClass("index-content-left");
+		}else{
+			$(".index-content").addClass("index-content-left");
+		}
+		
+	});
+</script>
 </html>
