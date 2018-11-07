@@ -1,70 +1,191 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="renderer" content="webkit">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ANSON思维首页</title>
-    <meta name="keywords" content="ANSON">
-    <meta name="description" content="ANSON思维">
-    <meta http_equiv="pragma" content="no-cache">
-    <meta http_equiv="Cache-Control" content="no-cache, must-revalidate">
-    <link rel="shortcut icon" href="../images/logo.ico">
-    <link rel="icon" href="../images/logo.ico">
-    <link rel="stylesheet" type="text/css" href="css/global.css">
-    <link rel="stylesheet" type="text/css" href="css/index.css"/>
-</head>
 
-<body>	
-    <!-- 内容 -->
-    <div class="index-content">
-      	<div class="slogan">
-      		我不怕千万人阻挡，只怕自己投降。
-      	</div>
-      	<div class="menu-cont">
-      		<ul class="clearfix">
-      			<li class="pull-left" id="code">
-      				<div class="menu-img">
-      					<img src="img/icon-apple.jpg"/>
-      				</div>
-      				<div class="menu-msg">
-      					code
-      				</div>
-      			</li>
-      			<li class="pull-left" id="poem">
-      				<div class="menu-img">
-      					<img src="img/icon-apple.jpg"/>
-      				</div>
-      				<div class="menu-msg">
-      					poem
-      				</div>
-      			</li>
-      		</ul>
-      	</div>
-	</div>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="renderer" content="webkit">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>ANSON思维首页</title>
+		<meta name="keywords" content="ANSON">
+		<meta name="description" content="ANSON思维">
+		<meta http_equiv="pragma" content="no-cache">
+		<meta http_equiv="Cache-Control" content="no-cache, must-revalidate">
+		<link rel="shortcut icon" href="../images/logo.ico">
+		<link rel="icon" href="../images/logo.ico">
+		<link rel="stylesheet" type="text/css" href="css/global.css">
+		<link rel="stylesheet" type="text/css" href="css/index.css" />
+	</head>
 
-</body>
-<!-- 资源加载 -->
-<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
-<!-- 业务逻辑 -->
-<script src="js/global.js" type="text/javascript" charset="utf-8"></script>
-<script type="text/javascript">
-	$(document).ready(function() {
-				var screenWidth = $("body").width(),
-					screenHeight = $(window).height() || document.body.screenHeight,
-					scrollTop = $(window).scrollTop()
-				$(".index-content").css('height', screenHeight);
-				console.log(screenHeight);
+	<body>
+		<!-- 内容 -->
+		<div class="index-content">
+			<div class="slogan">
+				我不怕千万人阻挡，只怕自己投降。
+			</div>
+			<div class="menu-cont">
+				<ul class="clearfix">
+					<li class="pull-left" id="code">
+						<div class="menu-img">
+							<img src="img/icon-apple.jpg" />
+						</div>
+						<div class="menu-msg">
+							code
+						</div>
+					</li>
+					<li class="pull-left" id="poem">
+						<div class="menu-img">
+							<img src="img/icon-apple.jpg" />
+						</div>
+						<div class="menu-msg">
+							poem
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!--列表-->
+		<div class="cont-right">
+			<div class="right-title">
+				那些踩过的坑
+			</div>
+			<div class="right-list-tab">
+				<div class="tab-cont clearfix">
+					<div class="pull-left tab-left">
+						<div class="tab-title">
+							ios下iframe页面内的input手机输入法bug
+						</div>
+						<div class="tab-msg">
+							苹果手机中运行的页面，在iframe 中 ，手指点击input框，自动弹出键盘后，输入几个文字，然后手指再点击一下input框之后，再在键盘里敲字母，就无法在input框显示所敲入的内容了。解决方案如下：
+						</div>
+						<div class="tab-date">
+							2018/10/10 10:17:08
+						</div>
+					</div>
+				</div>
+				<div class="tab-cont tab-cont-img clearfix">
+					<div class="pull-left tab-left">
+						<div class="tab-title">
+							前端开发——textarea自适应高度
+						</div>
+						<div class="tab-msg">
+							因为textarea不支持自适应高度，就是定好高度或者是行数之后，超出部分就会显示滚动条，看起来不美观。而用DIV来模拟时，首先遇到的问题是：div怎么实现输入功能？
+可能我们还是第一次见到...
+						</div>
+						<div class="tab-date">
+							2018/10/01 14:27:11
+						</div>
+					</div>
+					<div class="pull-right tab-right">
+						<div class="tab-img">
+							<img src="img/textarea.png"/>
+						</div>
+					</div>
+				</div>
+				<div class="tab-cont clearfix">
+					<div class="pull-left tab-left">
+						<div class="tab-title">
+							IOS开发之qq分享原生接入SDK
+						</div>
+						<div class="tab-msg">
+							写在正文之前：腾讯的qq SDK是真的坑！这个文档简直是我见过最坑的文档了！被逼着接原生SDK做分享的我只能自己去填坑了！！！
+						</div>
+						<div class="tab-date">
+							2018/09/11 17:37:18
+						</div>
+					</div>
+				</div>
+				<div class="tab-cont clearfix">
+					<div class="pull-left tab-left">
+						<div class="tab-title">
+							JS点击下载跳转IOS或者Android
+						</div>
+						<div class="tab-msg">
+							在移动wap上，最常见的就是引流用户下载安装自己的应用程序，如何通过js点击判断下载是ios还是安卓呢？其实很简单，就是要判断用户的设备是iOS还是Android，然后分别跳转就可以了
+						</div>
+						<div class="tab-date">
+							2018/08/15 16:31:19
+						</div>
+					</div>
+				</div>
+				<div class="tab-cont clearfix">
+					<div class="pull-left tab-left">
+						<div class="tab-title">
+							 IOS---将text文本转为image
+						</div>
+						<div class="tab-msg">
+							用代码实现，将一段text文本转为image，可作为标签使用。具体实现方式如下：
+						</div>
+						<div class="tab-date">
+							2018/04/14 11:31:11
+						</div>
+					</div>
+				</div>
+				<div class="tab-cont clearfix">
+					<div class="pull-left tab-left">
+						<div class="tab-title">
+							前端开发——下拉框（多选、单选、搜索、排序）
+						</div>
+						<div class="tab-msg">
+							需求：需要做一个下拉框组件，要求包含下拉列表前加一个多选框，勾选的列在下次打开时自动排在下拉列表前面置顶，点击列表中某一项，可以选中该项内容，并填充进展示框中，另外需要增加搜索功能，便于筛选下拉列表中的列。
+						</div>
+						<div class="tab-date">
+							2018/03/11 17:13:31
+						</div>
+					</div>
+				</div>
+				<div class="tab-cont clearfix">
+					<div class="pull-left tab-left">
+						<div class="tab-title">
+							ios&html5混合开发优化（二）
+						</div>
+						<div class="tab-msg">
+							优化oc与js传值：混合开发最大的问题就在于前台与后台直接的通信，这个不像用纯原生开发时数据都从接口处获取然后做想要的操作，混合开发中oc端是没有办法去操作页面的，因为页面是h5做的，这个时候就需要oc与js进行通信。
+						</div>
+						<div class="tab-date">
+							2018/02/09 11:22:38
+						</div>
+					</div>
+				</div>
+				<div class="tab-cont clearfix">
+					<div class="pull-left tab-left">
+						<div class="tab-title">
+							ios&html5混合开发优化（一）
+						</div>
+						<div class="tab-msg">
+							前言：本人原本是ios开发工程师，但由于现今H5的兴起，行内刮起了一阵混合开发的风气，趁着这股劲，我也学了前端开发，不说研究的多深，但也能胜任日常的开发工作。长话短说
+						</div>
+						<div class="tab-date">
+							2018/01/29 10:31:12
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</body>
+	<!-- 资源加载 -->
+	<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+	<!-- 业务逻辑 -->
+	<script src="js/global.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var screenWidth = $("body").width(),
+				screenHeight = $(window).height() || document.body.screenHeight,
+				scrollTop = $(window).scrollTop()
+			$(".index-content,.cont-right").css('height', screenHeight);
 
-});
-	$("#code").click(function(){
-		if($(".index-content").hasClass("index-content-left")){
-			$(".index-content").removeClass("index-content-left");
-		}else{
-			$(".index-content").addClass("index-content-left");
-		}
-		
-	});
-</script>
+		});
+		$("#code").click(function() {
+			if($(".index-content").hasClass("index-content-left")) {
+				$(".index-content").removeClass("index-content-left");
+				$(".cont-right").hide();
+			} else {
+				$(".index-content").addClass("index-content-left");
+				$(".cont-right").show();
+			}
+
+		});
+	</script>
+
 </html>
