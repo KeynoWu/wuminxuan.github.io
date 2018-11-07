@@ -43,9 +43,12 @@
 					</li>
 				</ul>
 			</div>
+			<div class="about" id="about">
+				About Me
+			</div>
 		</div>
-		<!--列表-->
-		<div class="cont-right">
+		<!--列表一-->
+		<div class="cont-right" id="code-right">
 			<div class="right-title">
 				那些踩过的坑
 			</div>
@@ -163,6 +166,92 @@
 				
 			</div>
 		</div>
+		
+		<!--列表二-->
+		<div class="cont-right" id="poem-right">
+			<div class="right-title">
+				那些如诗的生活
+			</div>
+			<div class="right-list-tab">
+				<div class="tab-cont tab-cont-img clearfix">
+					<div class="pull-left tab-left">
+						<div class="tab-title">
+							迪士尼打卡
+						</div>
+						<div class="tab-msg">
+							来魔都也有好几年了，迪士尼一直没有机会去，终于打卡成功。体验各种项目，飞越地平线、巴斯光年、雷鸣山漂流...对一个大老爷们来说....
+						</div>
+						<div class="tab-date">
+							2018/08/12 10:31:12
+						</div>
+					</div>
+					<div class="pull-right tab-right">
+						<div class="tab-img">
+							<img src="img/dishini.jpeg"/>
+						</div>
+					</div>
+				</div>
+				<div class="tab-cont tab-cont-img clearfix">
+					<div class="pull-left tab-left">
+						<div class="tab-title">
+							其实，我享受孤独。
+						</div>
+						<div class="tab-msg">
+							孤独这个字眼，很奇怪。魔都，灯红酒绿，繁华似锦，在这里，你的一切都会被喧闹所掩盖。你有才华，比你更有才华的大有人在；你有能力，比你更有能力的大有人在；你特立独...
+						</div>
+						<div class="tab-date">
+							2018/05/22 16:31:44
+						</div>
+					</div>
+					<div class="pull-right tab-right">
+						<div class="tab-img">
+							<img src="img/city.jpeg"/>
+						</div>
+					</div>
+				</div>
+				<div class="tab-cont tab-cont-img clearfix">
+					<div class="pull-left tab-left">
+						<div class="tab-title">
+							回不去的地方。
+						</div>
+						<div class="tab-msg">
+							上海这个地方，来了也有两年了。记得两年前毕业时，从学校辗转到上海，不少朋友问我，你为什么最后还是选择了上海？当时答不上来，只是说，总得寻个去处吧...
+						</div>
+						<div class="tab-date">
+							2017/03/09 14:27:11
+						</div>
+					</div>
+					<div class="pull-right tab-right">
+						<div class="tab-img">
+							<img src="img/shanghai.jpeg"/>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		
+		<!--列表三-->
+		<div class="cont-right" id="about-right">			
+			<div class="about-cont">
+				<div class="about-img">
+					<img src="img/my.jpeg"/>
+				</div>
+				<div class="about-title">
+					不想搞事的产品经理不是好程序猿~
+				</div>
+				<div class="about-msg">
+					<p>我是Anson，有信仰，爱生活，</p>
+					<p>毕业3年，现居住于魔都；</p>
+					<p>愿和你一起努力做更好的自己。</p>
+					<p>无论是看书，健身还是搞事。</p>
+				</div>
+				<div class="contact">
+					<p>QQ:1475776568</p>
+					<p>邮箱:1475776568@qq.com</p>
+				</div>
+			</div>
+		</div>
 	</body>
 	<!-- 资源加载 -->
 	<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
@@ -176,15 +265,40 @@
 			$(".index-content,.cont-right").css('height', screenHeight);
 
 		});
-		$("#code").click(function() {
+		$(".slogan").click(function() {
 			if($(".index-content").hasClass("index-content-left")) {
 				$(".index-content").removeClass("index-content-left");
-				$(".cont-right").hide();
+				$(".cont-right").hide();				
+			} else {
+				//不作处理
+			}
+		});
+		$("#code").click(function() {
+			if($(".index-content").hasClass("index-content-left")) {
+				$("#poem-right,#about-right").hide();
+				$("#code-right").show();
 			} else {
 				$(".index-content").addClass("index-content-left");
-				$(".cont-right").show();
+				$("#code-right").show();
 			}
-
+		});
+		$("#poem").click(function() {
+			if($(".index-content").hasClass("index-content-left")) {
+				$("#code-right,#about-right").hide();
+				$("#poem-right").show();
+			} else {
+				$(".index-content").addClass("index-content-left");
+				$("#poem-right").show();
+			}
+		});
+		$("#about").click(function() {
+			if($(".index-content").hasClass("index-content-left")) {
+				$("#code-right,#poem-right").hide();
+				$("#about-right").show();
+			} else {
+				$(".index-content").addClass("index-content-left");
+				$("#about-right").show();
+			}
 		});
 	</script>
 
