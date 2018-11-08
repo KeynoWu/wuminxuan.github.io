@@ -72,8 +72,7 @@
 							前端开发——textarea自适应高度
 						</div>
 						<div class="tab-msg">
-							因为textarea不支持自适应高度，就是定好高度或者是行数之后，超出部分就会显示滚动条，看起来不美观。而用DIV来模拟时，首先遇到的问题是：div怎么实现输入功能？
-可能我们还是第一次见到...
+							因为textarea不支持自适应高度，就是定好高度或者是行数之后，超出部分就会显示滚动条，看起来不美观。而用DIV来模拟时，首先遇到的问题是：div怎么实现输入功能？ 可能我们还是第一次见到...
 						</div>
 						<div class="tab-date">
 							2018/10/01 14:27:11
@@ -81,7 +80,7 @@
 					</div>
 					<div class="pull-right tab-right">
 						<div class="tab-img">
-							<img src="img/textarea.png"/>
+							<img src="img/textarea.png" />
 						</div>
 					</div>
 				</div>
@@ -114,7 +113,7 @@
 				<div class="tab-cont clearfix">
 					<div class="pull-left tab-left">
 						<div class="tab-title">
-							 IOS---将text文本转为image
+							IOS---将text文本转为image
 						</div>
 						<div class="tab-msg">
 							用代码实现，将一段text文本转为image，可作为标签使用。具体实现方式如下：
@@ -163,10 +162,10 @@
 						</div>
 					</div>
 				</div>
-				
+
 			</div>
 		</div>
-		
+
 		<!--列表二-->
 		<div class="cont-right" id="poem-right">
 			<div class="right-title">
@@ -187,7 +186,7 @@
 					</div>
 					<div class="pull-right tab-right">
 						<div class="tab-img">
-							<img src="img/dishini.jpeg"/>
+							<img src="img/dishini.jpeg" />
 						</div>
 					</div>
 				</div>
@@ -205,7 +204,7 @@
 					</div>
 					<div class="pull-right tab-right">
 						<div class="tab-img">
-							<img src="img/city.jpeg"/>
+							<img src="img/city.jpeg" />
 						</div>
 					</div>
 				</div>
@@ -223,19 +222,19 @@
 					</div>
 					<div class="pull-right tab-right">
 						<div class="tab-img">
-							<img src="img/shanghai.jpeg"/>
+							<img src="img/shanghai.jpeg" />
 						</div>
 					</div>
 				</div>
-				
+
 			</div>
 		</div>
-		
+
 		<!--列表三-->
-		<div class="cont-right" id="about-right">			
+		<div class="cont-right" id="about-right">
 			<div class="about-cont">
 				<div class="about-img">
-					<img src="img/my.jpeg"/>
+					<img src="img/my.jpeg" />
 				</div>
 				<div class="about-title">
 					不想搞事的产品经理不是好程序猿~
@@ -258,6 +257,12 @@
 	<!-- 业务逻辑 -->
 	<script src="js/global.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
+		$(window).resize(function() { //当浏览器大小变化时
+			var screenWidth = $("body").width(),
+				screenHeight = $(window).height() || document.body.screenHeight,
+				scrollTop = $(window).scrollTop()
+			$(".index-content,.cont-right").css('height', screenHeight);
+		});
 		$(document).ready(function() {
 			var screenWidth = $("body").width(),
 				screenHeight = $(window).height() || document.body.screenHeight,
@@ -268,7 +273,7 @@
 		$(".slogan").click(function() {
 			if($(".index-content").hasClass("index-content-left")) {
 				$(".index-content").removeClass("index-content-left");
-				$(".cont-right").hide();				
+				$(".cont-right").hide();
 			} else {
 				//不作处理
 			}
