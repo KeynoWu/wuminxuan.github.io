@@ -143,7 +143,8 @@
   margin-top: 20px;
   line-height: 30px;
   font-size: 18px;
-  color: #504D4D;
+  color: #FFFFFF;
+  font-weight: bold;
 }
 .cont-right .about-cont .about-msg {
   margin-top: 20px;
@@ -151,7 +152,7 @@
 .cont-right .about-cont .about-msg p {
   line-height: 20px;
   font-size: 14px;
-  color: #727070;
+  color: #c3b0b0;
 }
 .cont-right .about-cont .contact {
   margin-top: 20px;
@@ -159,5 +160,11 @@
 .cont-right .about-cont .contact p {
   line-height: 20px;
   font-size: 14px;
-  color: #727070;
+  color: #c3b0b0;
+}
+#about-right {
+  background-image: url(../img/about-bg.jpg);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  -moz-background-size: 100% 100%;
 }
