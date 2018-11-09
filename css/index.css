@@ -152,7 +152,7 @@
 .cont-right .about-cont .about-msg p {
   line-height: 20px;
   font-size: 14px;
-  color: #c3b0b0;
+  color: #f1ecec;
 }
 .cont-right .about-cont .contact {
   margin-top: 20px;
@@ -160,11 +160,12 @@
 .cont-right .about-cont .contact p {
   line-height: 20px;
   font-size: 14px;
-  color: #c3b0b0;
+  color: #f1ecec;
 }
 #about-right {
   background-image: url(../img/about-bg.jpg);
   background-repeat: no-repeat;
   background-size: 100% 100%;
   -moz-background-size: 100% 100%;
+  overflow: inherit;
 }
