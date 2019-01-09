@@ -1,0 +1,76 @@
+<html lang="zh-cn">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="renderer" content="webkit">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>ANSON思维</title>
+		<meta name="keywords" content="ANSON,思维,ANSON思维,IOS,ios,h5,Jquery,博客,文档,分享">
+		<meta name="description" content="ios&html5混合开发优化">
+		<meta name="baidu-site-verification" content="4IXNpgHm1T" />
+		<meta http_equiv="pragma" content="no-cache">
+		<meta http_equiv="Cache-Control" content="no-cache, must-revalidate">
+		<link rel="shortcut icon" href="../images/logo.ico">
+		<link rel="icon" href="../images/logo.ico">
+		<style>
+			body,
+			ul,
+			li {
+				margin: 0px;
+				padding: 0px;
+				list-style: none;
+				font-size: 12px;
+			}
+			
+			body {
+				margin: 100px 20%;
+			}
+			.hljs.objectivec,.hljs.xml,.hljs.javascript{
+				overflow-x: overlay;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h1 class="title" style="font-size: 34px; margin-bottom: 0px; font-family: -apple-system, &quot;SF UI Display&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-weight: 700; line-height: 1.3; color: rgb(51, 51, 51); caret-color: rgb(51, 51, 51); text-size-adjust: auto; word-break: break-word !important;">ios截屏及保存图片到本地</h1>
+		<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto; word-break: break-word !important;">截取当前屏幕显示的内容，并保存在本地：</p>
+		<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto; word-break: break-word !important;">1、项目添加：Photos.framework，AssetsLibrary.framework；</p>
+		<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto; word-break: break-word !important;">2、点击截屏按钮，调取下面的方法：</p><pre class="hljs objectivec" style="padding: 15px; margin-bottom: 20px; line-height: 1.42857; overflow-wrap: normal; color: rgb(171, 178, 191); background-color: rgb(40, 44, 52); text-size-adjust: auto; word-break: break-word !important;"><code class="objectivec" style="font-size: 13px; white-space: pre; border: none; vertical-align: middle;">-(<span class="hljs-keyword" style="color: rgb(198, 120, 221);">void</span>)jiepingBtn{
+
+<span class="hljs-built_in" style="color: rgb(230, 192, 123);">UIImage</span> * image = [<span class="hljs-keyword" style="color: rgb(198, 120, 221);">self</span> captureImageFromView:<span class="hljs-keyword" style="color: rgb(198, 120, 221);">self</span>.view];
+
+ALAssetsLibrary * library = [ALAssetsLibrary new];
+
+<span class="hljs-built_in" style="color: rgb(230, 192, 123);">NSData</span> * data = <span class="hljs-built_in" style="color: rgb(230, 192, 123);">UIImageJPEGRepresentation</span>(image, <span class="hljs-number" style="color: rgb(209, 154, 102);">1.0</span>);
+
+[library writeImageDataToSavedPhotosAlbum:data metadata:<span class="hljs-literal" style="color: rgb(86, 182, 194);">nil</span> completionBlock:<span class="hljs-literal" style="color: rgb(86, 182, 194);">nil</span>];
+
+}
+</code></pre>
+		<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto; word-break: break-word !important;">3、captureImageFromView的实现：</p><pre class="hljs objectivec" style="padding: 15px; margin-bottom: 20px; line-height: 1.42857; overflow-wrap: normal; color: rgb(171, 178, 191); background-color: rgb(40, 44, 52); text-size-adjust: auto; word-break: break-word !important;"><code class="objectivec" style="font-size: 13px; white-space: pre; border: none; vertical-align: middle;"><span class="hljs-comment" style="color: rgb(146, 146, 146);">//截图功能</span>
+
+-(<span class="hljs-built_in" style="color: rgb(230, 192, 123);">UIImage</span> *)captureImageFromView:(<span class="hljs-built_in" style="color: rgb(230, 192, 123);">UIView</span> *)view{
+
+<span class="hljs-built_in" style="color: rgb(230, 192, 123);">UIGraphicsBeginImageContextWithOptions</span>(<span class="hljs-keyword" style="color: rgb(198, 120, 221);">self</span>.view.frame.size,<span class="hljs-literal" style="color: rgb(86, 182, 194);">NO</span>, <span class="hljs-number" style="color: rgb(209, 154, 102);">0</span>);
+
+[[<span class="hljs-built_in" style="color: rgb(230, 192, 123);">UIColor</span> clearColor] setFill];
+
+[[<span class="hljs-built_in" style="color: rgb(230, 192, 123);">UIBezierPath</span> bezierPathWithRect:<span class="hljs-keyword" style="color: rgb(198, 120, 221);">self</span>.view.bounds] fill];
+
+<span class="hljs-built_in" style="color: rgb(230, 192, 123);">CGContextRef</span> ctx = <span class="hljs-built_in" style="color: rgb(230, 192, 123);">UIGraphicsGetCurrentContext</span>();
+
+[<span class="hljs-keyword" style="color: rgb(198, 120, 221);">self</span>.view.layer renderInContext:ctx];
+
+<span class="hljs-built_in" style="color: rgb(230, 192, 123);">UIImage</span> *image = <span class="hljs-built_in" style="color: rgb(230, 192, 123);">UIGraphicsGetImageFromCurrentImageContext</span>();
+
+<span class="hljs-built_in" style="color: rgb(230, 192, 123);">UIGraphicsEndImageContext</span>();
+
+<span class="hljs-keyword" style="color: rgb(198, 120, 221);">return</span> image;}
+</code></pre>
+		<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto; word-break: break-word !important;">4、现在你就可以在你本地图库里看你刚才截取的图片了。</p>
+		<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto; word-break: break-word !important;">5、方法的简单解释：</p>
+		<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto; word-break: break-word !important;">UIImageJPEGRepresentation函数需要两个参数:图片的引用和压缩系数。</p>
+	</body>
+
+</html>
