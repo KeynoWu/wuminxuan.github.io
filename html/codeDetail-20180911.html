@@ -1,0 +1,102 @@
+<html lang="zh-cn">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="renderer" content="webkit">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>ANSON思维</title>
+		<meta name="keywords" content="ANSON,思维,ANSON思维,IOS,ios,h5,Jquery,博客,文档,分享">
+		<meta name="description" content="ios开发，qq分享">
+		<meta name="baidu-site-verification" content="4IXNpgHm1T" />
+		<meta http_equiv="pragma" content="no-cache">
+		<meta http_equiv="Cache-Control" content="no-cache, must-revalidate">
+		<link rel="shortcut icon" href="../images/logo.ico">
+		<link rel="icon" href="../images/logo.ico">
+		<style>
+			body,
+			ul,
+			li {
+				margin: 0px;
+				padding: 0px;
+				list-style: none;
+				font-size: 12px;
+			}
+			
+			body {
+				margin: 100px 20%;
+			}
+			.hljs.objectivec{
+				overflow-x: overlay;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h1 class="title" style="font-size: 34px; margin-bottom: 0px; font-family: -apple-system, &quot;SF UI Display&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-weight: 700; line-height: 1.3; color: rgb(51, 51, 51); caret-color: rgb(51, 51, 51); text-size-adjust: auto; word-break: break-word !important;">IOS开发之qq分享原生接入SDK</h1>
+		<p style="font-size: 34px; margin-bottom: 0px; font-family: -apple-system, &quot;SF UI Display&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-weight: 700; line-height: 1.3; color: rgb(51, 51, 51); caret-color: rgb(51, 51, 51); text-size-adjust: auto; word-break: break-word !important;"><br></p>
+		<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto; word-break: break-word !important;">写在正文之前：腾讯的qq SDK是真的坑！这个文档简直是我见过最坑的文档了！被逼着接原生SDK做分享的我只能自己去填坑了！！！</p>
+		<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto; word-break: break-word !important;">简单来说，主要分为以下几个步骤：</p>
+		<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto; word-break: break-word !important;">一、首先，把TencentOpenAPI.framework导入工程中。</p>
+		<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto; word-break: break-word !important;">二、添加SDK依赖的系统库文件</p>
+		<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto; word-break: break-word !important;">“Security.framework”、“libiconv.dylib”、“SystemConfiguration.framework”、“CoreGraphics.Framework”、“libsqlite3.dylib”、“CoreTelephony.framework”、“libstdc++.dylib”、“libz.dylib”。</p>
+		<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto; word-break: break-word !important;">三、在AppDelegate.h中 导入 头文件</p><pre class="hljs cpp" style="padding: 15px; margin-bottom: 20px; line-height: 1.42857; overflow-wrap: normal; color: rgb(171, 178, 191); background-color: rgb(40, 44, 52); text-size-adjust: auto; word-break: break-word !important;"><code class="cpp" style="font-size: 13px; white-space: pre; border: none; vertical-align: middle;"><span class="hljs-meta" style="color: rgb(97, 174, 238);">#import <span class="hljs-meta-string" style="color: rgb(152, 195, 121);">&lt;TencentOpenAPI/TencentOAuth.h&gt;</span></span>
+</code></pre>
+		<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto; word-break: break-word !important;">四、注册分享功能</p><pre class="hljs objectivec" style="padding: 15px; margin-bottom: 20px; line-height: 1.42857; overflow-wrap: normal; color: rgb(171, 178, 191); background-color: rgb(40, 44, 52); text-size-adjust: auto; word-break: break-word !important;"><code class="objectivec" style="font-size: 13px; white-space: pre; border: none; vertical-align: middle;">- (<span class="hljs-built_in" style="color: rgb(230, 192, 123);">BOOL</span>)application:(<span class="hljs-built_in" style="color: rgb(230, 192, 123);">UIApplication</span> *)application didFinishLaunchingWithOptions:(<span class="hljs-built_in" style="color: rgb(230, 192, 123);">NSDictionary</span> *)launchOptions {
+
+[[TencentOAuth alloc] initWithAppId:TencentAppId andDelegate:<span class="hljs-literal" style="color: rgb(86, 182, 194);">nil</span>]; 
+
+｝
+</code></pre>
+		<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto; word-break: break-word !important;">五、在AppDelegate 的handleOpenURL和openURL方法中添加关于qq分享的相关处理</p><pre class="hljs objectivec" style="padding: 15px; margin-bottom: 20px; line-height: 1.42857; overflow-wrap: normal; color: rgb(171, 178, 191); background-color: rgb(40, 44, 52); text-size-adjust: auto; word-break: break-word !important;"><code class="objectivec" style="font-size: 13px; white-space: pre; border: none; vertical-align: middle;">- (<span class="hljs-built_in" style="color: rgb(230, 192, 123);">BOOL</span>)application:(<span class="hljs-built_in" style="color: rgb(230, 192, 123);">UIApplication</span> *)application openURL:(<span class="hljs-built_in" style="color: rgb(230, 192, 123);">NSURL</span> *)url sourceApplication:(<span class="hljs-built_in" style="color: rgb(230, 192, 123);">NSString</span> *)sourceApplication annotation:(<span class="hljs-keyword" style="color: rgb(198, 120, 221);">id</span>)annotation {
+    <span class="hljs-built_in" style="color: rgb(230, 192, 123);">NSString</span> *string =[url absoluteString];
+    <span class="hljs-keyword" style="color: rgb(198, 120, 221);">if</span> ([string hasPrefix:JBSWeixinAppId]){
+        <span class="hljs-keyword" style="color: rgb(198, 120, 221);">return</span> [WXApi handleOpenURL:url delegate:<span class="hljs-keyword" style="color: rgb(198, 120, 221);">self</span>];
+    }<span class="hljs-keyword" style="color: rgb(198, 120, 221);">else</span> <span class="hljs-keyword" style="color: rgb(198, 120, 221);">if</span> ([string hasPrefix:TencentAppId]){
+        <span class="hljs-keyword" style="color: rgb(198, 120, 221);">return</span>[TencentOAuth HandleOpenURL:url];
+    }
+    <span class="hljs-keyword" style="color: rgb(198, 120, 221);">return</span> <span class="hljs-literal" style="color: rgb(86, 182, 194);">NO</span>;
+}
+
+- (<span class="hljs-built_in" style="color: rgb(230, 192, 123);">BOOL</span>)application:(<span class="hljs-built_in" style="color: rgb(230, 192, 123);">UIApplication</span> *)app openURL:(<span class="hljs-built_in" style="color: rgb(230, 192, 123);">NSURL</span> *)url options:(<span class="hljs-built_in" style="color: rgb(230, 192, 123);">NSDictionary</span>&lt;<span class="hljs-built_in" style="color: rgb(230, 192, 123);">UIApplicationOpenURLOptionsKey</span>, <span class="hljs-keyword" style="color: rgb(198, 120, 221);">id</span>&gt; *)options {
+    <span class="hljs-built_in" style="color: rgb(230, 192, 123);">NSString</span> *string =[url absoluteString];
+     <span class="hljs-keyword" style="color: rgb(198, 120, 221);">if</span> ([string hasPrefix:JBSWeixinAppId]){
+        <span class="hljs-keyword" style="color: rgb(198, 120, 221);">return</span> [WXApi handleOpenURL:url delegate:<span class="hljs-keyword" style="color: rgb(198, 120, 221);">self</span>];
+    }<span class="hljs-keyword" style="color: rgb(198, 120, 221);">else</span> <span class="hljs-keyword" style="color: rgb(198, 120, 221);">if</span> ([string hasPrefix:TencentAppId]){
+        <span class="hljs-keyword" style="color: rgb(198, 120, 221);">return</span>[TencentOAuth HandleOpenURL:url];
+    }
+    <span class="hljs-keyword" style="color: rgb(198, 120, 221);">return</span> <span class="hljs-literal" style="color: rgb(86, 182, 194);">NO</span>;
+}
+
+</code></pre>
+		<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto; word-break: break-word !important;">（注意：这里不用实现TencentSessionDelegate代理方法，因为手机QQ里分享时，会等到分享成功后，才会跳回原应用，所以不用监听发送情况）</p>
+		<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto; word-break: break-word !important;">六、在ViewCotroller里加入头文件</p><pre class="hljs cpp" style="padding: 15px; margin-bottom: 20px; line-height: 1.42857; overflow-wrap: normal; color: rgb(171, 178, 191); background-color: rgb(40, 44, 52); text-size-adjust: auto; word-break: break-word !important;"><code class="cpp" style="font-size: 13px; white-space: pre; border: none; vertical-align: middle;"><span class="hljs-meta" style="color: rgb(97, 174, 238);">#import  <span class="hljs-meta-string" style="color: rgb(152, 195, 121);">&lt;TencentOpenAPI/QQApiInterfaceObject.h&gt;</span></span>
+<span class="hljs-meta" style="color: rgb(97, 174, 238);">#import <span class="hljs-meta-string" style="color: rgb(152, 195, 121);">&lt;TencentOpenAPI/TencentOAuth.h&gt;</span></span>
+<span class="hljs-meta" style="color: rgb(97, 174, 238);">#import <span class="hljs-meta-string" style="color: rgb(152, 195, 121);">&lt;TencentOpenAPI/QQApiInterface.h&gt;</span></span>
+</code></pre>
+		<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto; word-break: break-word !important;">七、发起qq分享</p><pre class="hljs objectivec" style="padding: 15px; margin-bottom: 20px; line-height: 1.42857; overflow-wrap: normal; color: rgb(171, 178, 191); background-color: rgb(40, 44, 52); text-size-adjust: auto; word-break: break-word !important;"><code class="objectivec" style="font-size: 13px; white-space: pre; border: none; vertical-align: middle;">-(<span class="hljs-keyword" style="color: rgb(198, 120, 221);">void</span>)tencentShare{
+
+<span class="hljs-keyword" style="color: rgb(198, 120, 221);">if</span> (![TencentOAuth iphoneQQInstalled]) {
+           [<span class="hljs-keyword" style="color: rgb(198, 120, 221);">self</span> showAlert:<span class="hljs-string" style="color: rgb(152, 195, 121);">@"检查到您没有安装腾讯QQ，请先安装QQ再分享。"</span>];
+        }<span class="hljs-keyword" style="color: rgb(198, 120, 221);">else</span> {
+            <span class="hljs-built_in" style="color: rgb(230, 192, 123);">NSURL</span> *newsUrl = [<span class="hljs-built_in" style="color: rgb(230, 192, 123);">NSURL</span> URLWithString:[<span class="hljs-keyword" style="color: rgb(198, 120, 221);">self</span>.shareData.link stringByAddingPercentEscapesUsingEncoding:<span class="hljs-built_in" style="color: rgb(230, 192, 123);">NSUTF8StringEncoding</span>]];
+            <span class="hljs-keyword" style="color: rgb(198, 120, 221);">self</span>.tencentOAuth = [[TencentOAuth alloc] initWithAppId:<span class="hljs-string" style="color: rgb(152, 195, 121);">@"123456"</span>
+                                                        andDelegate:<span class="hljs-keyword" style="color: rgb(198, 120, 221);">self</span>];
+            QQApiNewsObject *newsObj = [QQApiNewsObject
+                                        objectWithURL:newsUrl
+                                        title:<span class="hljs-keyword" style="color: rgb(198, 120, 221);">self</span>.shareData.title
+                                        description:<span class="hljs-keyword" style="color: rgb(198, 120, 221);">self</span>.shareData.desc
+                                        previewImageURL:[<span class="hljs-built_in" style="color: rgb(230, 192, 123);">NSURL</span> URLWithString:<span class="hljs-keyword" style="color: rgb(198, 120, 221);">self</span>.shareData.imgUrl]];
+            SendMessageToQQReq *req = [SendMessageToQQReq reqWithContent:newsObj];
+            <span class="hljs-keyword" style="color: rgb(198, 120, 221);">if</span> (btn.tag == <span class="hljs-number" style="color: rgb(209, 154, 102);">0</span>) {
+                <span class="hljs-built_in" style="color: rgb(230, 192, 123);">NSLog</span>(<span class="hljs-string" style="color: rgb(152, 195, 121);">@"QQ好友列表分享 "</span>);
+            }<span class="hljs-keyword" style="color: rgb(198, 120, 221);">else</span> <span class="hljs-keyword" style="color: rgb(198, 120, 221);">if</span> (btn.tag == <span class="hljs-number" style="color: rgb(209, 154, 102);">1</span>){
+                <span class="hljs-built_in" style="color: rgb(230, 192, 123);">NSLog</span>(<span class="hljs-string" style="color: rgb(152, 195, 121);">@"QQ空间分享 "</span>);
+            }
+        }
+}
+</code></pre>
+		<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto; word-break: break-word !important;">然后，运行起来，搞定~<br>（最后再吐槽一波官方qq 分享的文档，是真滴坑）</p>
+	</body>
+
+</html>

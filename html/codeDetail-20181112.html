@@ -1,0 +1,130 @@
+<html lang="zh-cn">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="renderer" content="webkit">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>ANSON思维</title>
+		<meta name="keywords" content="ANSON,思维,ANSON思维,IOS,ios,h5,Jquery,博客,文档,分享">
+		<meta name="description" content="解决在HTTPS页面里嵌套HTTP页面浏览器block的问题">
+		<meta name="baidu-site-verification" content="4IXNpgHm1T" />
+		<meta http_equiv="pragma" content="no-cache">
+		<meta http_equiv="Cache-Control" content="no-cache, must-revalidate">
+		<link rel="shortcut icon" href="../images/logo.ico">
+		<link rel="icon" href="../images/logo.ico">
+		<style>
+			body,
+			ul,
+			li {
+				margin: 0px;
+				padding: 0px;
+				list-style: none;
+				font-size: 12px;
+			}
+			
+			body {
+				margin: 100px 20%;
+			}
+			.hljs.objectivec,.hljs.xml,.hljs.javascript{
+				overflow-x: overlay;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h1 class="title" style="font-size: 34px; margin-bottom: 0px; font-family: -apple-system, &quot;SF UI Display&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-weight: 700; line-height: 1.3; color: rgb(51, 51, 51); caret-color: rgb(51, 51, 51); text-size-adjust: auto; word-break: break-word !important;">解决在HTTPS页面里嵌套HTTP页面浏览器block的问题</h1>
+		<div id="free-reward-panel" class="support-author" style="min-height: 144px; padding: 20px 0px; text-align: center; clear: both; caret-color: rgb(51, 51, 51); color: rgb(51, 51, 51); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 17px; text-size-adjust: auto;">
+			<div class="article" style="text-align: start; text-size-adjust: auto;">
+				<div data-note-content="" class="show-content" style="color: rgb(47, 47, 47); font-size: 16px; line-height: 1.7; word-break: break-word !important;">
+					<div class="show-content-free">
+						<p style="margin-bottom: 25px; word-break: break-word !important;"><span style="font-weight: 700;">问题描述：</span></p>
+						<p style="margin-bottom: 25px; word-break: break-word !important;">&nbsp;&nbsp;&nbsp; 浏览器默认是不允许在HTTPS里面引用HTTP页面的，ie下面会弹出提示框提示是否显示不安全的内容，一般都会弹出提示框，用户确认后才会继续加载，但是chrome下面直接被block掉，只在控制台打出信息。</p>
+						<p style="margin-bottom: 25px; word-break: break-word !important;">&nbsp;&nbsp;&nbsp; 在写网站的时候，自己的网站要嵌入别的网站，用iframe嵌入部分内容，当我把网站升级成https后，发现用iframe嵌http页面内容显示不出来，chrome控制台打出不安全的信息。</p>
+						<p style="margin-bottom: 25px; word-break: break-word !important;"><span style="font-weight: 700;">解决思路：</span></p>
+						<p style="margin-bottom: 25px; word-break: break-word !important;">&nbsp;&nbsp;&nbsp; 谷歌上不去不知道有没有更好的解决办法，反正百度里没找到。大致说下思路，https里嵌不了http页面，那就嵌https页面好了，但是别人网站是http的，很多时候你是没办法要求别人的网站要做成https来配合你的，那么，我干脆起一台Apache服务器，配成https的，指定一个子域名，然后利用Apache的代理，将https代理到http的url。（当然，前提条件是你的服务器不是Apache，如果是Apache就简单了）。这里注意，我们另外起的Apache跟我们原来的服务器没有任何关系，Apache只用来处理http这种情况。（之前我有个误区，是在自己的服务器前面套个Apache，也可以实现，但或许会有漏洞，还是并行处理更为科学）；</p>
+						<p style="margin-bottom: 25px; word-break: break-word !important;"><span style="font-weight: 700;">具体做法：</span></p>
+						<p style="margin-bottom: 25px; word-break: break-word !important;">&nbsp;&nbsp;&nbsp; 这里假设我们自己的网站url是https://example.com/a.html，我们要嵌入的url是http://www.123.com/details.html。</p>
+						<p style="margin-bottom: 25px; word-break: break-word !important;">先下载Apache，因为要配https，要带ssl模块，网上找带ssl的msi安装包找一半天没找到（哪哥们美女找到请跟我说一下），这里提供一个下载教程
+							<a href="http://jingyan.baidu.com/article/29697b912f6539ab20de3cf8.html" target="_blank" rel="nofollow" style="color: rgb(49, 148, 208); cursor: pointer;">http://jingyan.baidu.com/article/29697b912f6539ab20de3cf8.html</a>，写得还挺详细的。这里我直接贴我的下载地址，
+							<a href="http://www.apachehaus.com/cgi-bin/download.plx?dli=UVVMPFWaNFjTEp0KaJTNZBlVOpkVFVFdNdkUrR1d" target="_blank" rel="nofollow" style="color: rgb(49, 148, 208); cursor: pointer;">http://www.apachehaus.com/cgi-bin/download.plx?dli=UVVMPFWaNFjTEp0KaJTNZBlVOpkVFVFdNdkUrR1d</a>64位的，我在server2008上测试的。下载完是一个包，httpd-2.2.29-x64-r3.zip，解压Apache22文件夹，这是整个程序文件夹，放在你自己想放得地方，这个是自己带了ssl的，不需要单独加模块，然后我们开始配置。</p>
+						<p style="margin-bottom: 25px; word-break: break-word !important;">1，先装Apache服务，dos命令bin目录下，如果出现拒绝访问的情况，windows附件里命令提示符右键管理员身份运行，win7下或许会出现这样的问题。httpd.exe –k install，安装成功会提示成功。然后httpd.exe 开启服务，开不了找原因，试试在服务里去开，win+R services.msc这里要注意，这个版本的Apache默认加载ssl模块，默认端口是443，如果端口被占用了，要改端口。查看端口是否被占用，这里提供几个dos命令：a.查看所有的端口占用情况<span style="font-weight: 700;">netstat -ano</span>;b.查看指定端口的占用情况<span style="font-weight: 700;">netstat -aon|findstr "443"</span>找到PID比如2016<span style="font-weight: 700;">;</span>c.找到对应的程序<span style="font-weight: 700;">tasklist|findstr "2016"。</span>改Apache https端口：config/extra/httpd-ssl.conf，要改的地方很简单，找到443，<span style="font-weight: 700;">这里我改成445，我们主网站用的443</span>，改成你的端口，改完配置别忘了重启。</p>
+						<p style="margin-bottom: 25px; word-break: break-word !important;">2，配https，这里应该是最麻烦的事了，配好后，访问
+							<a href="https://127.0.0.1:445/" target="_blank" rel="nofollow" style="color: rgb(49, 148, 208); cursor: pointer;">https://127.0.0.1:445</a>会出现风险什么的，查看https那里的叉，这是Apache默认测试的证书</p>
+						<p style="margin-bottom: 25px; word-break: break-word !important;"><br></p>
+						<div class="image-package" style="padding-bottom: 25px; width: 700px; margin-left: -40px; text-align: center;">
+							<div class="image-container" style="position: relative; z-index: 100; background-color: transparent; transition: background-color 0.1s linear 0s; margin: 0px auto; max-width: 530px; max-height: 575px;">
+								<div class="image-container-fill" style="z-index: 50; padding-bottom: 574.984px;"></div>
+								<div class="image-view" data-width="530" data-height="575" style="position: absolute; top: 0px; left: 0px; width: 530px; height: 574.984px; overflow: hidden;"><img data-original-src="//upload-images.jianshu.io/upload_images/1339076-168b7cf480ee4afb.png" data-original-width="530" data-original-height="575" data-original-format="image/png" data-original-filesize="134841" class="" src="https://upload-images.jianshu.io/upload_images/1339076-168b7cf480ee4afb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/530" style="transition: all 0.15s linear 0s; z-index: 100; opacity: 1; max-width: 100%; height: auto; cursor: zoom-in; display: block; filter: blur(0px);"></div>
+							</div>
+							<div class="image-caption" style="min-width: 20%; max-width: 80%; min-height: 22px; display: inline-block; padding: 10px; margin: 0px auto; border-bottom: 1px solid rgb(217, 217, 217); font-size: 14px; color: rgb(150, 150, 150); line-height: 1.7;">1</div>
+						</div>
+						<p style="margin-bottom: 25px; word-break: break-word !important;">截图太多貌似发布不了，点开证书信息应该是说颁发给Apache Haus什么的），好这里开始配证书，conf/httpd.conf，打开，最下面</p>
+						<p style="margin-bottom: 25px; word-break: break-word !important;"><br></p>
+						<div class="image-package" style="padding-bottom: 25px; width: 700px; margin-left: -40px; text-align: center;">
+							<div class="image-container" style="position: relative; z-index: 100; background-color: transparent; transition: background-color 0.1s linear 0s; margin: 0px auto; max-width: 700px; max-height: 276px;">
+								<div class="image-container-fill" style="z-index: 50; padding-bottom: 237.922px;"></div>
+								<div class="image-view" data-width="812" data-height="276" style="position: absolute; top: 0px; left: 0px; width: 700px; height: 237.922px; overflow: hidden;"><img data-original-src="//upload-images.jianshu.io/upload_images/1339076-7951d4677908578b.png" data-original-width="812" data-original-height="276" data-original-format="image/png" data-original-filesize="21678" class="" src="https://upload-images.jianshu.io/upload_images/1339076-7951d4677908578b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/812" style="transition: all 0.15s linear 0s; z-index: 100; opacity: 1; max-width: 100%; height: auto; cursor: zoom-in; display: block; filter: blur(0px);"></div>
+							</div>
+							<div class="image-caption" style="min-width: 20%; max-width: 80%; min-height: 22px; display: inline-block; padding: 10px; margin: 0px auto; border-bottom: 1px solid rgb(217, 217, 217); font-size: 14px; color: rgb(150, 150, 150); line-height: 1.7;">2</div>
+						</div>
+						<p style="margin-bottom: 25px; word-break: break-word !important;">就是这个地方，狠坑了我一把，也是参照网上配的，但是不管怎么配证书就是不对，后来猜想这里可能有问题，果然猫腻在这里。这里改成<span style="font-weight: 700;">httpd-ssl.conf</span>&nbsp;这个配置，我是在这个里面配的。现在到conf/extra下面，你可以看到httpd-ssl.conf，核心的配置在这里</p>
+						<p style="margin-bottom: 25px; word-break: break-word !important;"><br></p>
+						<div class="image-package" style="padding-bottom: 25px; width: 700px; margin-left: -40px; text-align: center;">
+							<div class="image-container" style="position: relative; z-index: 100; background-color: transparent; transition: background-color 0.1s linear 0s; margin: 0px auto; max-width: 565px; max-height: 350px;">
+								<div class="image-container-fill" style="z-index: 50; padding-bottom: 350.016px;"></div>
+								<div class="image-view" data-width="565" data-height="350" style="position: absolute; top: 0px; left: 0px; width: 565px; height: 350px; overflow: hidden;"><img data-original-src="//upload-images.jianshu.io/upload_images/1339076-179460d7369874b6.png" data-original-width="565" data-original-height="350" data-original-format="image/png" data-original-filesize="21371" class="" src="https://upload-images.jianshu.io/upload_images/1339076-179460d7369874b6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/565" style="transition: all 0.15s linear 0s; z-index: 100; opacity: 1; max-width: 100%; height: auto; cursor: zoom-in; display: block; filter: blur(0px);"></div>
+							</div>
+							<div class="image-caption" style="min-width: 20%; max-width: 80%; min-height: 22px; display: inline-block; padding: 10px; margin: 0px auto; border-bottom: 1px solid rgb(217, 217, 217); font-size: 14px; color: rgb(150, 150, 150); line-height: 1.7;">3</div>
+						</div>
+						<p style="margin-bottom: 25px; word-break: break-word !important;">（是不是要监听443端口，<span style="font-weight: 700;">改成445）</span></p>
+						<p style="margin-bottom: 25px; word-break: break-word !important;"><span style="font-weight: 700;"><br></span></p>
+						<div class="image-package" style="padding-bottom: 25px; width: 700px; margin-left: -40px; text-align: center;">
+							<div class="image-container" style="position: relative; z-index: 100; background-color: transparent; transition: background-color 0.1s linear 0s; margin: 0px auto; max-width: 456px; max-height: 232px;">
+								<div class="image-container-fill" style="z-index: 50; padding-bottom: 232px;"></div>
+								<div class="image-view" data-width="456" data-height="232" style="position: absolute; top: 0px; left: 0px; width: 456px; height: 232px; overflow: hidden;"><img data-original-src="//upload-images.jianshu.io/upload_images/1339076-f42b75c97bb9e0e2.png" data-original-width="456" data-original-height="232" data-original-format="image/png" data-original-filesize="14423" class="" src="https://upload-images.jianshu.io/upload_images/1339076-f42b75c97bb9e0e2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/456" style="transition: all 0.15s linear 0s; z-index: 100; opacity: 1; max-width: 100%; height: auto; cursor: zoom-in; display: block; filter: blur(0px);"></div>
+							</div>
+							<div class="image-caption" style="min-width: 20%; max-width: 80%; min-height: 22px; display: inline-block; padding: 10px; margin: 0px auto; border-bottom: 1px solid rgb(217, 217, 217); font-size: 14px; color: rgb(150, 150, 150); line-height: 1.7;">4</div>
+						</div>
+						<p style="margin-bottom: 25px; word-break: break-word !important;">同上<span style="font-weight: 700;">改成445</span></p>
+						<p style="margin-bottom: 25px; word-break: break-word !important;"><span style="font-weight: 700;"><br></span></p>
+						<div class="image-package" style="padding-bottom: 25px; width: 700px; margin-left: -40px; text-align: center;">
+							<div class="image-container" style="position: relative; z-index: 100; background-color: transparent; transition: background-color 0.1s linear 0s; margin: 0px auto; max-width: 692px; max-height: 330px;">
+								<div class="image-container-fill" style="z-index: 50; padding-bottom: 330px;"></div>
+								<div class="image-view" data-width="692" data-height="330" style="position: absolute; top: 0px; left: 0px; width: 692px; height: 330px; overflow: hidden;"><img data-original-src="//upload-images.jianshu.io/upload_images/1339076-f5ca9328a1800591.png" data-original-width="692" data-original-height="330" data-original-format="image/png" data-original-filesize="32157" class="" src="https://upload-images.jianshu.io/upload_images/1339076-f5ca9328a1800591.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/692" style="transition: all 0.15s linear 0s; z-index: 100; opacity: 1; max-width: 100%; height: auto; cursor: zoom-in; display: block; filter: blur(0px);"></div>
+							</div>
+							<div class="image-caption" style="min-width: 20%; max-width: 80%; min-height: 22px; display: inline-block; padding: 10px; margin: 0px auto; border-bottom: 1px solid rgb(217, 217, 217); font-size: 14px; color: rgb(150, 150, 150); line-height: 1.7;">5</div>
+						</div>
+						<p style="margin-bottom: 25px; word-break: break-word !important;">证书和私钥，这里改成你自己的就可以了，记住要放在ssl文件夹里。</p>
+						<p style="margin-bottom: 25px; word-break: break-word !important;">3，重启Apache，开启服务就应该有这个，右下角，没有在bin目录下打开ApacheMonitor.exe</p>
+						<div class="image-package" style="padding-bottom: 25px; width: 700px; margin-left: -40px; text-align: center;">
+							<div class="image-container" style="position: relative; z-index: 100; background-color: transparent; transition: background-color 0.1s linear 0s; margin: 0px auto; max-width: 303px; max-height: 159px;">
+								<div class="image-container-fill" style="z-index: 50; padding-bottom: 159px;"></div>
+								<div class="image-view" data-width="303" data-height="159" style="position: absolute; top: 0px; left: 0px; width: 303px; height: 159px; overflow: hidden;"><img data-original-src="//upload-images.jianshu.io/upload_images/1339076-906d3605afeb26d1.png" data-original-width="303" data-original-height="159" data-original-format="image/png" data-original-filesize="7458" class="" src="https://upload-images.jianshu.io/upload_images/1339076-906d3605afeb26d1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/303" style="transition: all 0.15s linear 0s; z-index: 100; opacity: 1; max-width: 100%; height: auto; cursor: zoom-in; display: block; filter: blur(0px);"></div>
+							</div>
+						</div>
+						<p style="margin-bottom: 25px; word-break: break-word !important;">4，好了，前几步没问题，现在访问
+							<a href="https://example.com:445/" target="_blank" rel="nofollow" style="color: rgb(49, 148, 208); cursor: pointer;">https://example.com:445/</a>应该就是Apache默认的页面，现在我们利用Apache的反向代理做url映射，ttpd.conf里找到这两行，把前面的#号去掉，然后在最底下加两行</p>
+						<div class="image-package" style="padding-bottom: 25px; width: 700px; margin-left: -40px; text-align: center;">
+							<div class="image-container" style="position: relative; z-index: 100; background-color: transparent; transition: background-color 0.1s linear 0s; margin: 0px auto; max-width: 625px; max-height: 169px;">
+								<div class="image-container-fill" style="z-index: 50; padding-bottom: 169px;"></div>
+								<div class="image-view" data-width="625" data-height="169" style="position: absolute; top: 0px; left: 0px; width: 625px; height: 169px; overflow: hidden;"><img data-original-src="//upload-images.jianshu.io/upload_images/1339076-1b2a0fd19dee79f8.png" data-original-width="625" data-original-height="169" data-original-format="image/png" data-original-filesize="11281" class="" src="https://upload-images.jianshu.io/upload_images/1339076-1b2a0fd19dee79f8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/625" style="transition: all 0.15s linear 0s; z-index: 100; opacity: 1; max-width: 100%; height: auto; cursor: zoom-in; display: block; filter: blur(0px);"></div>
+							</div>
+						</div>
+						<p style="margin-bottom: 25px; word-break: break-word !important;">ProxyPass&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /proxy/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; http://www.123.com/details.html</p>
+						<p style="margin-bottom: 25px; word-break: break-word !important;">ProxyPassReverse&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; /proxy /&nbsp;&nbsp;&nbsp;&nbsp; http://www.123.com/details.html</p>
+						<p style="margin-bottom: 25px; word-break: break-word !important;">然后重启Apache，上面两句话的意思是你访问https://example.com:445/proxy/将代理到http://www.123.com/details.html，所以当你要在地址上带后缀的时候，就体现出了价值，比如产品有产品号什么的，https://example.com:445/proxy/?id=340实际上访问的是http://www.123.com/details.html?id=340，这样就能得到不同的产品详情。</p>
+						<p style="margin-bottom: 25px; word-break: break-word !important;">5，没什么问题这样就解决了https嵌http不安全的问题。实际上，我们这里端口并不一样，还是属于跨域，但是问题的初衷是https里面不能嵌套http，所以，如果https里面嵌套的https页面跨域了，也是没有问题的。</p>
+						<p style="margin-bottom: 25px; word-break: break-word !important;"><span style="font-weight: 700;">总结：</span></p>
+						<p style="margin-bottom: 25px; word-break: break-word !important;">这坑爹的问题，之前完全没发现，等到上线的时候发现不行了，我去，当时真是无语死了，也没有解决办法，现在写出来吧，如果有人遇到同样的问题了，希望能帮你解决这个问题，知识要共享。这个不涉及代码的问题，整个就是配置配置，另外给大家贴个讲Apache的网站，Apache真心不错，好使
+							<a href="http://www.php100.com/manual/apache2/mod/mod_proxy.html" target="_blank" rel="nofollow" style="color: rgb(49, 148, 208); cursor: pointer;">http://www.php100.com/manual/apache2/mod/mod_proxy.html</a>
+						</p>
+						<p style="margin-bottom: 25px; word-break: break-word !important;">参考地址：https://www.cnblogs.com/AsuraRoute/p/4287179.html?utm_source=tuicool&amp;utm_medium=referral</p>
+					</div>
+				</div>
+			</div>
+			<div id="free-reward-panel" class="support-author" style="min-height: 144px; padding: 20px 0px; clear: both; text-size-adjust: auto;"></div>
+		</div>
+	</body>
+
+</html>

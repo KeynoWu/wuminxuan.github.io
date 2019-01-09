@@ -1,0 +1,301 @@
+<html lang="zh-cn">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="renderer" content="webkit">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>ANSON思维</title>
+		<meta name="keywords" content="ANSON,思维,ANSON思维,IOS,ios,h5,Jquery,博客,文档,分享">
+		<meta name="description" content="前端开发，下拉框">
+		<meta name="baidu-site-verification" content="4IXNpgHm1T" />
+		<meta http_equiv="pragma" content="no-cache">
+		<meta http_equiv="Cache-Control" content="no-cache, must-revalidate">
+		<link rel="shortcut icon" href="../images/logo.ico">
+		<link rel="icon" href="../images/logo.ico">
+		<style>
+			body,
+			ul,
+			li {
+				margin: 0px;
+				padding: 0px;
+				list-style: none;
+				font-size: 12px;
+			}
+			
+			body {
+				margin: 100px 20%;
+			}
+			.hljs.objectivec,.hljs.xml,.hljs.javascript{
+				overflow-x: overlay;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h1 class="title" style="font-size: 34px; margin-bottom: 0px; font-family: -apple-system, &quot;SF UI Display&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-weight: 700; line-height: 1.3; color: rgb(51, 51, 51); caret-color: rgb(51, 51, 51); text-size-adjust: auto; word-break: break-word !important;">前端开发——下拉框（多选、单选、搜索、排序）</h1>
+		<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto; word-break: break-word !important;"><b>需求</b><br>需要做一个下拉框组件，要求包含下拉列表前加一个多选框，勾选的列在下次打开时自动排在下拉列表前面置顶，点击列表中某一项，可以选中该项内容，并填充进展示框中，另外需要增加搜索功能，便于筛选下拉列表中的列。</p>
+		<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto; word-break: break-word !important;"><b>分析</b><br>首先多选框，选用jquery自带的input类别为checkbox属性的多选框，处理点击事件，选中和取消选中，分别处理input的checkbox属性即可。<br>当确认多选框选中状态后，将选中的列内容存入数组，并将该数组存入localstorage。<br>再次打开下拉框的时候，从localstorage中取出存入的数组，遍历下拉框中各项内容，与该数组做对比，删除掉不重合的部分，再将该数组与得到的数组合并得到一个新的数组，最后将此数组按顺序分别赋值到下拉框中的各项内容。使完成排序需求。<br>另外，点击列表某一项，将选中内容填充展示框，可以直接在下拉框各列内容区域增加点击事件，处理内容填充到展示框即可。<br>最后，搜索功能，用一个input框，通过keyup事件，获取input每次输入的值，并与下拉框中的内容做对比，将包含该值的列筛选出来展示。<br>注意点：<br>主要是多种功能结合，在取值和筛选值的时候要注意原始值要发生变化，要保持随时更新值。</p>
+		<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto; word-break: break-word !important;"><b>代码块</b></p>
+		<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto; word-break: break-word !important;">html</p><pre class="hljs xml" style="padding: 15px; margin-bottom: 20px; line-height: 1.42857; overflow-wrap: normal; color: rgb(171, 178, 191); background-color: rgb(40, 44, 52); text-size-adjust: auto; word-break: break-word !important;"><code class="xml" style="font-size: 13px; white-space: pre; border: none; vertical-align: middle;"><span class="hljs-tag">&lt;<span class="hljs-name" style="color: rgb(224, 108, 117);">div</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">style</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"width:170px;position:relative;"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name" style="color: rgb(224, 108, 117);">div</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">class</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"jd-select form-control"</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">style</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"width:170px;"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name" style="color: rgb(224, 108, 117);">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name" style="color: rgb(224, 108, 117);">div</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">class</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"jd-select-cont"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name" style="color: rgb(224, 108, 117);">input</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">type</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"text"</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">class</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"search-input"</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">placeholder</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"搜索"</span> /&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name" style="color: rgb(224, 108, 117);">ul</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name" style="color: rgb(224, 108, 117);">li</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">class</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"jd-li"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name" style="color: rgb(224, 108, 117);">input</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">type</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"checkbox"</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">class</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">" checkbox-jd pull-left"</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">value</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"1"</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">style</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"width:22px;height:30px;margin:0;"</span> /&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name" style="color: rgb(224, 108, 117);">span</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">class</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"type-name pull-left"</span>&gt;</span>品类1<span class="hljs-tag">&lt;/<span class="hljs-name" style="color: rgb(224, 108, 117);">span</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name" style="color: rgb(224, 108, 117);">li</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name" style="color: rgb(224, 108, 117);">li</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">class</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"jd-li"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name" style="color: rgb(224, 108, 117);">input</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">type</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"checkbox"</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">class</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"checkbox-jd pull-left"</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">value</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"2"</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">style</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"width:22px;height:30px;margin:0;"</span> /&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name" style="color: rgb(224, 108, 117);">span</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">class</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"type-name pull-left"</span>&gt;</span>品类2<span class="hljs-tag">&lt;/<span class="hljs-name" style="color: rgb(224, 108, 117);">span</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name" style="color: rgb(224, 108, 117);">li</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name" style="color: rgb(224, 108, 117);">li</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">class</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"jd-li"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name" style="color: rgb(224, 108, 117);">input</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">type</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"checkbox"</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">class</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"checkbox-jd pull-left"</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">value</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"3"</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">style</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"width:22px;height:30px;margin:0;"</span> /&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name" style="color: rgb(224, 108, 117);">span</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">class</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"type-name pull-left"</span>&gt;</span>品类3<span class="hljs-tag">&lt;/<span class="hljs-name" style="color: rgb(224, 108, 117);">span</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name" style="color: rgb(224, 108, 117);">li</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name" style="color: rgb(224, 108, 117);">li</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">class</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"jd-li"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name" style="color: rgb(224, 108, 117);">input</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">type</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"checkbox"</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">class</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"checkbox-jd pull-left"</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">value</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"4"</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">style</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"width:22px;height:30px;margin:0;"</span> /&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name" style="color: rgb(224, 108, 117);">span</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">class</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"type-name pull-left"</span>&gt;</span>品类4<span class="hljs-tag">&lt;/<span class="hljs-name" style="color: rgb(224, 108, 117);">span</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name" style="color: rgb(224, 108, 117);">li</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name" style="color: rgb(224, 108, 117);">li</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">class</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"jd-li"</span>&gt;</span>
+                <span class="hljs-tag">&lt;<span class="hljs-name" style="color: rgb(224, 108, 117);">input</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">type</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"checkbox"</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">class</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"checkbox-jd pull-left"</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">value</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"5"</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">style</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"width:22px;height:30px;margin:0;"</span> /&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name" style="color: rgb(224, 108, 117);">span</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">class</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"type-name pull-left"</span>&gt;</span>品类5<span class="hljs-tag">&lt;/<span class="hljs-name" style="color: rgb(224, 108, 117);">span</span>&gt;</span>
+            <span class="hljs-tag">&lt;/<span class="hljs-name" style="color: rgb(224, 108, 117);">li</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name" style="color: rgb(224, 108, 117);">ul</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name" style="color: rgb(224, 108, 117);">div</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">class</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"btn-cont"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name" style="color: rgb(224, 108, 117);">div</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">class</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"sure-btn"</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">id</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"sure-btn"</span>&gt;</span>确定<span class="hljs-tag">&lt;/<span class="hljs-name" style="color: rgb(224, 108, 117);">div</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name" style="color: rgb(224, 108, 117);">div</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">class</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"cancel-btn"</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">id</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"cancel-btn"</span>&gt;</span>取消<span class="hljs-tag">&lt;/<span class="hljs-name" style="color: rgb(224, 108, 117);">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name" style="color: rgb(224, 108, 117);">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name" style="color: rgb(224, 108, 117);">div</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name" style="color: rgb(224, 108, 117);">div</span>&gt;</span>
+</code></pre>
+		<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto; word-break: break-word !important;">jquery部分</p><pre class="hljs javascript" style="padding: 15px; margin-bottom: 20px; line-height: 1.42857; overflow-wrap: normal; color: rgb(171, 178, 191); background-color: rgb(40, 44, 52); text-size-adjust: auto; word-break: break-word !important;"><code class="javascript" style="font-size: 13px; white-space: pre; border: none; vertical-align: middle;"><span class="hljs-keyword" style="color: rgb(198, 120, 221);">var</span> arrC;
+<span class="hljs-keyword" style="color: rgb(198, 120, 221);">var</span> varrC;
+<span class="hljs-keyword" style="color: rgb(198, 120, 221);">var</span> arrcheckd;
+<span class="hljs-keyword" style="color: rgb(198, 120, 221);">var</span> varrcheckd;
+<span class="hljs-keyword" style="color: rgb(198, 120, 221);">var</span> arrRecord;
+<span class="hljs-keyword" style="color: rgb(198, 120, 221);">var</span> varrRecord;
+<span class="hljs-keyword" style="color: rgb(198, 120, 221);">var</span> arr;
+<span class="hljs-keyword" style="color: rgb(198, 120, 221);">var</span> varr;
+<span class="hljs-keyword" style="color: rgb(198, 120, 221);">var</span> arrSearch;
+<span class="hljs-keyword" style="color: rgb(198, 120, 221);">var</span> arrSearchChecked;
+<span class="hljs-keyword" style="color: rgb(198, 120, 221);">var</span> varrSearch;
+<span class="hljs-keyword" style="color: rgb(198, 120, 221);">var</span> varrSearchChecked;
+$(<span class="hljs-built_in" style="color: rgb(230, 192, 123);">document</span>).ready(<span class="hljs-function"><span class="hljs-keyword" style="color: rgb(198, 120, 221);">function</span>(<span class="hljs-params"></span>) </span>{
+    arrC = <span class="hljs-keyword" style="color: rgb(198, 120, 221);">new</span> <span class="hljs-built_in" style="color: rgb(230, 192, 123);">Array</span>();
+    varrC = <span class="hljs-keyword" style="color: rgb(198, 120, 221);">new</span> <span class="hljs-built_in" style="color: rgb(230, 192, 123);">Array</span>();
+    arrcheckd = <span class="hljs-keyword" style="color: rgb(198, 120, 221);">new</span> <span class="hljs-built_in" style="color: rgb(230, 192, 123);">Array</span>();
+    varrcheckd = <span class="hljs-keyword" style="color: rgb(198, 120, 221);">new</span> <span class="hljs-built_in" style="color: rgb(230, 192, 123);">Array</span>();
+    arrcheckd = localStorage.getItem(<span class="hljs-string" style="color: rgb(152, 195, 121);">"arrcheckd"</span>);
+    varrcheckd = localStorage.getItem(<span class="hljs-string" style="color: rgb(152, 195, 121);">"varrcheckd"</span>);
+    arrRecord;
+    varrRecord;
+    arr = <span class="hljs-keyword" style="color: rgb(198, 120, 221);">new</span> <span class="hljs-built_in" style="color: rgb(230, 192, 123);">Array</span>();
+    varr = <span class="hljs-keyword" style="color: rgb(198, 120, 221);">new</span> <span class="hljs-built_in" style="color: rgb(230, 192, 123);">Array</span>();
+    <span class="hljs-keyword" style="color: rgb(198, 120, 221);">if</span>(arrcheckd) {
+        arrRecord = arrcheckd.split(<span class="hljs-string" style="color: rgb(152, 195, 121);">","</span>);
+        varrRecord = varrcheckd.split(<span class="hljs-string" style="color: rgb(152, 195, 121);">","</span>);
+    } <span class="hljs-keyword" style="color: rgb(198, 120, 221);">else</span> {
+        arrRecord = <span class="hljs-keyword" style="color: rgb(198, 120, 221);">new</span> <span class="hljs-built_in" style="color: rgb(230, 192, 123);">Array</span>();
+        varrRecord = <span class="hljs-keyword" style="color: rgb(198, 120, 221);">new</span> <span class="hljs-built_in" style="color: rgb(230, 192, 123);">Array</span>();
+    }
+    $(<span class="hljs-string" style="color: rgb(152, 195, 121);">".jd-select-cont ul li span"</span>).each(<span class="hljs-function"><span class="hljs-keyword" style="color: rgb(198, 120, 221);">function</span>(<span class="hljs-params"></span>) </span>{
+        <span class="hljs-keyword" style="color: rgb(198, 120, 221);">var</span> op = $(<span class="hljs-keyword" style="color: rgb(198, 120, 221);">this</span>).text();
+        <span class="hljs-keyword" style="color: rgb(198, 120, 221);">if</span>($.inArray(op, arrRecord) == <span class="hljs-number" style="color: rgb(209, 154, 102);">-1</span>) {
+            arr.push(op);
+            varr.push($(<span class="hljs-keyword" style="color: rgb(198, 120, 221);">this</span>).prev(<span class="hljs-string" style="color: rgb(152, 195, 121);">"input"</span>).val());
+        }
+    });
+
+    arr = arrRecord.concat(arr);
+    varr = varrRecord.concat(varr);
+});
+<span class="hljs-comment" style="color: rgb(146, 146, 146);">//点击多选框事件</span>
+$(<span class="hljs-string" style="color: rgb(152, 195, 121);">"body"</span>).on(<span class="hljs-string" style="color: rgb(152, 195, 121);">'click'</span>, <span class="hljs-string" style="color: rgb(152, 195, 121);">".checkbox-jd"</span>, <span class="hljs-function"><span class="hljs-keyword" style="color: rgb(198, 120, 221);">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword" style="color: rgb(198, 120, 221);">if</span>($(<span class="hljs-keyword" style="color: rgb(198, 120, 221);">this</span>).prop(<span class="hljs-string" style="color: rgb(152, 195, 121);">"checked"</span>)) {
+        $(<span class="hljs-keyword" style="color: rgb(198, 120, 221);">this</span>).prop(<span class="hljs-string" style="color: rgb(152, 195, 121);">"checked"</span>);
+        arrRecord.push($(<span class="hljs-keyword" style="color: rgb(198, 120, 221);">this</span>).next(<span class="hljs-string" style="color: rgb(152, 195, 121);">".type-name"</span>).html());
+        varrRecord.push($(<span class="hljs-keyword" style="color: rgb(198, 120, 221);">this</span>).val());
+    } <span class="hljs-keyword" style="color: rgb(198, 120, 221);">else</span> {
+        $(<span class="hljs-keyword" style="color: rgb(198, 120, 221);">this</span>).removeProp(<span class="hljs-string" style="color: rgb(152, 195, 121);">"checked"</span>);
+        arrRecord.splice($.inArray($(<span class="hljs-keyword" style="color: rgb(198, 120, 221);">this</span>).next(<span class="hljs-string" style="color: rgb(152, 195, 121);">".type-name"</span>).html(), arrRecord), <span class="hljs-number" style="color: rgb(209, 154, 102);">1</span>);
+        varrRecord.splice($.inArray($(<span class="hljs-keyword" style="color: rgb(198, 120, 221);">this</span>).val(), varrRecord), <span class="hljs-number" style="color: rgb(209, 154, 102);">1</span>);
+    }
+});
+<span class="hljs-comment" style="color: rgb(146, 146, 146);">//点击保存多选框事件</span>
+$(<span class="hljs-string" style="color: rgb(152, 195, 121);">"#sure-btn"</span>).click(<span class="hljs-function"><span class="hljs-keyword" style="color: rgb(198, 120, 221);">function</span>(<span class="hljs-params"></span>) </span>{
+    $(<span class="hljs-string" style="color: rgb(152, 195, 121);">".jd-select-cont"</span>).hide();
+    <span class="hljs-built_in" style="color: rgb(230, 192, 123);">console</span>.log(<span class="hljs-string" style="color: rgb(152, 195, 121);">"arrRecord.length==="</span> + arrRecord.length)
+    <span class="hljs-built_in" style="color: rgb(230, 192, 123);">window</span>.localStorage.setItem(<span class="hljs-string" style="color: rgb(152, 195, 121);">"arrcheckd"</span>, arrRecord.toString()); <span class="hljs-comment" style="color: rgb(146, 146, 146);">//存数据</span>
+    <span class="hljs-built_in" style="color: rgb(230, 192, 123);">window</span>.localStorage.setItem(<span class="hljs-string" style="color: rgb(152, 195, 121);">"varrcheckd"</span>, varrRecord.toString()); <span class="hljs-comment" style="color: rgb(146, 146, 146);">//存数据</span>
+});
+<span class="hljs-comment" style="color: rgb(146, 146, 146);">//点击取消保存多选框事件</span>
+$(<span class="hljs-string" style="color: rgb(152, 195, 121);">".cancel-btn"</span>).click(<span class="hljs-function"><span class="hljs-keyword" style="color: rgb(198, 120, 221);">function</span>(<span class="hljs-params"></span>) </span>{
+    $(<span class="hljs-string" style="color: rgb(152, 195, 121);">".jd-select-cont"</span>).hide();
+});
+<span class="hljs-comment" style="color: rgb(146, 146, 146);">//点击展开下拉列表并排序   </span>
+$(<span class="hljs-string" style="color: rgb(152, 195, 121);">".jd-select"</span>).click(<span class="hljs-function"><span class="hljs-keyword" style="color: rgb(198, 120, 221);">function</span>(<span class="hljs-params"></span>) </span>{
+    $(<span class="hljs-string" style="color: rgb(152, 195, 121);">".jd-select-cont"</span>).show();
+    $(<span class="hljs-string" style="color: rgb(152, 195, 121);">".search-input"</span>).val(<span class="hljs-string" style="color: rgb(152, 195, 121);">""</span>);
+    searchJD(<span class="hljs-string" style="color: rgb(152, 195, 121);">""</span>);
+    <span class="hljs-comment" style="color: rgb(146, 146, 146);">//搜索</span>
+    arrSearch = <span class="hljs-keyword" style="color: rgb(198, 120, 221);">new</span> <span class="hljs-built_in" style="color: rgb(230, 192, 123);">Array</span>();
+    arrSearchChecked = <span class="hljs-keyword" style="color: rgb(198, 120, 221);">new</span> <span class="hljs-built_in" style="color: rgb(230, 192, 123);">Array</span>();
+    varrSearch = <span class="hljs-keyword" style="color: rgb(198, 120, 221);">new</span> <span class="hljs-built_in" style="color: rgb(230, 192, 123);">Array</span>();
+    varrSearchChecked = <span class="hljs-keyword" style="color: rgb(198, 120, 221);">new</span> <span class="hljs-built_in" style="color: rgb(230, 192, 123);">Array</span>();
+    $(<span class="hljs-string" style="color: rgb(152, 195, 121);">".search-input"</span>).keyup(<span class="hljs-function"><span class="hljs-keyword" style="color: rgb(198, 120, 221);">function</span>(<span class="hljs-params"></span>) </span>{
+        <span class="hljs-keyword" style="color: rgb(198, 120, 221);">var</span> searchValue = $(<span class="hljs-string" style="color: rgb(152, 195, 121);">".search-input"</span>).val();
+        searchJD(searchValue);
+    });
+});
+
+<span class="hljs-function"><span class="hljs-keyword" style="color: rgb(198, 120, 221);">function</span> <span class="hljs-title" style="color: rgb(97, 174, 238);">showAll</span>(<span class="hljs-params"></span>) </span>{
+
+    <span class="hljs-keyword" style="color: rgb(198, 120, 221);">var</span> arrNew = <span class="hljs-keyword" style="color: rgb(198, 120, 221);">new</span> <span class="hljs-built_in" style="color: rgb(230, 192, 123);">Array</span>();
+    <span class="hljs-keyword" style="color: rgb(198, 120, 221);">var</span> varrNew = <span class="hljs-keyword" style="color: rgb(198, 120, 221);">new</span> <span class="hljs-built_in" style="color: rgb(230, 192, 123);">Array</span>();
+    <span class="hljs-keyword" style="color: rgb(198, 120, 221);">for</span>(<span class="hljs-keyword" style="color: rgb(198, 120, 221);">var</span> i = <span class="hljs-number" style="color: rgb(209, 154, 102);">0</span>; i &lt; arr.length; i++) {
+        <span class="hljs-keyword" style="color: rgb(198, 120, 221);">if</span>($.inArray(arr[i], arrRecord) == <span class="hljs-number" style="color: rgb(209, 154, 102);">-1</span>) {
+            arrNew.push(arr[i]);
+            varrNew.push(varr[i]);
+        }
+    };
+    arrNew = arrRecord.concat(arrNew);
+    varrNew = varrRecord.concat(varrNew);
+    <span class="hljs-keyword" style="color: rgb(198, 120, 221);">var</span> html = <span class="hljs-string" style="color: rgb(152, 195, 121);">''</span>;
+    <span class="hljs-keyword" style="color: rgb(198, 120, 221);">for</span>(<span class="hljs-keyword" style="color: rgb(198, 120, 221);">var</span> i = <span class="hljs-number" style="color: rgb(209, 154, 102);">0</span>; i &lt; arrRecord.length; i++) {
+        html += <span class="hljs-string" style="color: rgb(152, 195, 121);">'&lt;li class="jd-li"&gt;&lt;input type="checkbox" checked class=" checkbox-jd pull-left" value="'</span> + varrNew[i] + <span class="hljs-string" style="color: rgb(152, 195, 121);">'"  style="width:22px;height:30px;margin:0;" /&gt;&lt;span class="type-name pull-left"&gt;'</span> + arrNew[i] + <span class="hljs-string" style="color: rgb(152, 195, 121);">'&lt;/span&gt;&lt;/li&gt;'</span>;
+    }
+    <span class="hljs-keyword" style="color: rgb(198, 120, 221);">for</span>(<span class="hljs-keyword" style="color: rgb(198, 120, 221);">var</span> j = arrRecord.length; j &lt; arrNew.length; j++) {
+        html += <span class="hljs-string" style="color: rgb(152, 195, 121);">'&lt;li class="jd-li"&gt;&lt;input type="checkbox" class=" checkbox-jd pull-left" value="'</span> + varrNew[j] + <span class="hljs-string" style="color: rgb(152, 195, 121);">'"  style="width:22px;height:30px;margin:0;" /&gt;&lt;span class="type-name pull-left"&gt;'</span> + arrNew[j] + <span class="hljs-string" style="color: rgb(152, 195, 121);">'&lt;/span&gt;&lt;/li&gt;'</span>;
+    }
+    $(<span class="hljs-string" style="color: rgb(152, 195, 121);">".jd-select-cont ul"</span>).html(html);
+};
+
+<span class="hljs-function"><span class="hljs-keyword" style="color: rgb(198, 120, 221);">function</span> <span class="hljs-title" style="color: rgb(97, 174, 238);">searchJD</span>(<span class="hljs-params">searchValue</span>) </span>{
+    <span class="hljs-keyword" style="color: rgb(198, 120, 221);">if</span>(searchValue == <span class="hljs-string" style="color: rgb(152, 195, 121);">""</span>) {
+        showAll();
+        <span class="hljs-keyword" style="color: rgb(198, 120, 221);">return</span>;
+    } <span class="hljs-keyword" style="color: rgb(198, 120, 221);">else</span> {
+        arrSearch = <span class="hljs-keyword" style="color: rgb(198, 120, 221);">new</span> <span class="hljs-built_in" style="color: rgb(230, 192, 123);">Array</span>()
+        arrSearchChecked = <span class="hljs-keyword" style="color: rgb(198, 120, 221);">new</span> <span class="hljs-built_in" style="color: rgb(230, 192, 123);">Array</span>();
+        <span class="hljs-keyword" style="color: rgb(198, 120, 221);">var</span> arrNew = <span class="hljs-keyword" style="color: rgb(198, 120, 221);">new</span> <span class="hljs-built_in" style="color: rgb(230, 192, 123);">Array</span>();
+        varrSearch = <span class="hljs-keyword" style="color: rgb(198, 120, 221);">new</span> <span class="hljs-built_in" style="color: rgb(230, 192, 123);">Array</span>()
+        varrSearchChecked = <span class="hljs-keyword" style="color: rgb(198, 120, 221);">new</span> <span class="hljs-built_in" style="color: rgb(230, 192, 123);">Array</span>();
+        <span class="hljs-keyword" style="color: rgb(198, 120, 221);">var</span> varrNew = <span class="hljs-keyword" style="color: rgb(198, 120, 221);">new</span> <span class="hljs-built_in" style="color: rgb(230, 192, 123);">Array</span>();
+        <span class="hljs-keyword" style="color: rgb(198, 120, 221);">for</span>(<span class="hljs-keyword" style="color: rgb(198, 120, 221);">var</span> i = <span class="hljs-number" style="color: rgb(209, 154, 102);">0</span>; i &lt; arr.length; i++) {
+
+            <span class="hljs-keyword" style="color: rgb(198, 120, 221);">if</span>($.inArray(arr[i], arrRecord) == <span class="hljs-number" style="color: rgb(209, 154, 102);">-1</span>) {
+                arrNew.push(arr[i]);
+                varrNew.push(varr[i]);
+            }
+
+        };
+        arrNew = arrRecord.concat(arrNew);
+        varrNew = varrRecord.concat(varrNew);
+
+        <span class="hljs-keyword" style="color: rgb(198, 120, 221);">for</span>(<span class="hljs-keyword" style="color: rgb(198, 120, 221);">var</span> i = <span class="hljs-number" style="color: rgb(209, 154, 102);">0</span>; i &lt; arrNew.length; i++) {
+            <span class="hljs-keyword" style="color: rgb(198, 120, 221);">if</span>(arrNew[i].indexOf(searchValue) != <span class="hljs-number" style="color: rgb(209, 154, 102);">-1</span>) {
+                arrSearch.push(arrNew[i]);
+                varrSearch.push(varrNew[i]);
+                <span class="hljs-keyword" style="color: rgb(198, 120, 221);">if</span>(i &lt; arrRecord.length) {
+                    arrSearchChecked.push(arrNew[i]);
+                    varrSearchChecked.push(varrNew[i]);
+                }
+            }
+        }
+
+        <span class="hljs-keyword" style="color: rgb(198, 120, 221);">var</span> html = <span class="hljs-string" style="color: rgb(152, 195, 121);">''</span>;
+        <span class="hljs-keyword" style="color: rgb(198, 120, 221);">for</span>(<span class="hljs-keyword" style="color: rgb(198, 120, 221);">var</span> i = <span class="hljs-number" style="color: rgb(209, 154, 102);">0</span>; i &lt; arrSearchChecked.length; i++) {
+
+            html += <span class="hljs-string" style="color: rgb(152, 195, 121);">'&lt;li class="jd-li"&gt;&lt;input type="checkbox" checked class=" checkbox-jd pull-left" value="'</span> + varrSearchChecked[i] + <span class="hljs-string" style="color: rgb(152, 195, 121);">'"  style="width:22px;height:30px;margin:0;" /&gt;&lt;span class="type-name pull-left"&gt;'</span> + arrSearchChecked[i] + <span class="hljs-string" style="color: rgb(152, 195, 121);">'&lt;/span&gt;&lt;/li&gt;'</span>;
+        }
+        <span class="hljs-keyword" style="color: rgb(198, 120, 221);">for</span>(<span class="hljs-keyword" style="color: rgb(198, 120, 221);">var</span> j = arrSearchChecked.length; j &lt; arrSearch.length; j++) {
+
+            html += <span class="hljs-string" style="color: rgb(152, 195, 121);">'&lt;li class="jd-li"&gt;&lt;input type="checkbox" class=" checkbox-jd pull-left" value="'</span> + varrSearch[j] + <span class="hljs-string" style="color: rgb(152, 195, 121);">'"  style="width:22px;height:30px;margin:0;" /&gt;&lt;span class="type-name pull-left"&gt;'</span> + arrSearch[j] + <span class="hljs-string" style="color: rgb(152, 195, 121);">'&lt;/span&gt;&lt;/li&gt;'</span>;
+        }
+        $(<span class="hljs-string" style="color: rgb(152, 195, 121);">".jd-select-cont ul"</span>).html(html);
+
+    };
+};
+<span class="hljs-comment" style="color: rgb(146, 146, 146);">//点击选中下拉框中某一项</span>
+$(<span class="hljs-string" style="color: rgb(152, 195, 121);">"body"</span>).on(<span class="hljs-string" style="color: rgb(152, 195, 121);">'click'</span>, <span class="hljs-string" style="color: rgb(152, 195, 121);">".type-name"</span>, <span class="hljs-function"><span class="hljs-keyword" style="color: rgb(198, 120, 221);">function</span>(<span class="hljs-params"></span>) </span>{
+
+    $(<span class="hljs-string" style="color: rgb(152, 195, 121);">".jd-select"</span>).html($(<span class="hljs-keyword" style="color: rgb(198, 120, 221);">this</span>).html());
+        $(<span class="hljs-string" style="color: rgb(152, 195, 121);">".jd-select-cont"</span>).hide();
+    alert($(<span class="hljs-keyword" style="color: rgb(198, 120, 221);">this</span>).prev(<span class="hljs-string" style="color: rgb(152, 195, 121);">"input"</span>).val());
+});
+</code></pre>
+		<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto; word-break: break-word !important;">css部分</p><pre class="hljs bash" style="padding: 15px; margin-bottom: 20px; line-height: 1.42857; overflow-wrap: normal; color: rgb(171, 178, 191); background-color: rgb(40, 44, 52); text-size-adjust: auto; word-break: break-word !important;"><code class="bash" style="font-size: 13px; white-space: pre; border: none; vertical-align: middle;">.jd-select {
+    position: relative;
+    
+}
+.jd-select-cont {
+        display: none;
+        position: absolute;
+        left: 0;
+        top: 33px;
+        width: 170px;
+        height: 280px;
+        background: <span class="hljs-comment" style="color: rgb(146, 146, 146);">#FFFFFF;</span>
+        border: 1px solid <span class="hljs-comment" style="color: rgb(146, 146, 146);">#E1E1E1;</span>
+        .search-input{
+           width: 170px;
+           height: 28px;
+           line-height: 28px;
+           border: 1px solid <span class="hljs-comment" style="color: rgb(146, 146, 146);">#eee; </span>
+        }
+        ul {
+            width: 100%;
+            height: 210px;
+            overflow: overlay;
+            li {
+                display: block !important;
+                width: 100% !important;
+                height: 30px;
+                .<span class="hljs-built_in" style="color: rgb(230, 192, 123);">type</span>-name {
+                    display: block;
+                    width: 70%;
+                    height: 30px;
+                    line-height: 30px;
+                }
+            }
+        }
+        .btn-cont {
+            width: 100%;
+            height: 30px;
+            padding: 10px 20px;
+            .sure-btn {
+                width: 50px;
+                height: 20px;
+                line-height: 20px;
+                <span class="hljs-built_in" style="color: rgb(230, 192, 123);">float</span>: left;
+                background: <span class="hljs-comment" style="color: rgb(146, 146, 146);">#4990E2;</span>
+                color: <span class="hljs-comment" style="color: rgb(146, 146, 146);">#fff;</span>
+                font-size: 12px;
+                text-align: center;
+                border-radius: 4px;
+            }
+            .cancel-btn {
+                width: 50px;
+                height: 20px;
+                line-height: 20px;
+                <span class="hljs-built_in" style="color: rgb(230, 192, 123);">float</span>: left;
+                border-radius: 4px;
+                border: 1px solid <span class="hljs-comment" style="color: rgb(146, 146, 146);">#4990E2;</span>
+                color: <span class="hljs-comment" style="color: rgb(146, 146, 146);">#4990E2;</span>
+                text-align: center;
+                margin-left: 27px;
+            }
+        }
+    }
+</code></pre>
+		<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto; word-break: break-word !important;">效果图</p>
+		<p style="font-size: 34px; margin-bottom: 0px; font-family: -apple-system, &quot;SF UI Display&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-weight: 700; line-height: 1.3; color: rgb(51, 51, 51); caret-color: rgb(51, 51, 51); text-size-adjust: auto; word-break: break-word !important;"><br style="caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; font-weight: normal; text-size-adjust: auto;"></p>
+		<div class="image-package" style="padding-bottom: 25px; width: 700px; margin-left: -40px; text-align: center; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto;">
+			<div class="image-container" style="position: relative; z-index: 100; background-color: transparent; transition: background-color 0.1s linear 0s; margin: 0px auto; max-width: 350px; max-height: 618px;">
+				<div class="image-container-fill" style="z-index: 50; padding-bottom: 617.984px;"></div>
+				<div class="image-view" data-width="350" data-height="618" style="position: absolute; top: 0px; left: 0px; width: 350px; height: 617.984px; overflow: hidden;"><img data-original-src="//upload-images.jianshu.io/upload_images/1339076-2091bf165db6f573.png" data-original-width="350" data-original-height="618" data-original-format="image/png" data-original-filesize="31991" class="" src="https://upload-images.jianshu.io/upload_images/1339076-2091bf165db6f573.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/350" style="transition: all 0.15s linear 0s; z-index: 100; opacity: 1; max-width: 100%; height: auto; cursor: zoom-in; display: block; filter: blur(0px);"></div>
+			</div>
+			<div class="image-caption" style="min-width: 20%; max-width: 80%; min-height: 22px; display: inline-block; padding: 10px; margin: 0px auto; border-bottom: 1px solid rgb(217, 217, 217); font-size: 14px; color: rgb(150, 150, 150); line-height: 1.7;">111.png</div>
+		</div>
+		<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto; word-break: break-word !important;">小结：代码写的略乱，主要用作自我笔记，方便下次遇到该需求，能较快找到解决方法。</p>
+		<div id="free-reward-panel" class="support-author" style="min-height: 144px; padding: 20px 0px; text-align: center; clear: both; caret-color: rgb(51, 51, 51); color: rgb(51, 51, 51); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 17px; text-size-adjust: auto;"><br></div>
+	</body>
+
+</html>

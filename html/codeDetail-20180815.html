@@ -1,0 +1,66 @@
+<html lang="zh-cn">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="renderer" content="webkit">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>ANSON思维</title>
+		<meta name="keywords" content="ANSON,思维,ANSON思维,IOS,ios,h5,Jquery,博客,文档,分享">
+		<meta name="description" content="js点击跳转ios，Android">
+		<meta name="baidu-site-verification" content="4IXNpgHm1T" />
+		<meta http_equiv="pragma" content="no-cache">
+		<meta http_equiv="Cache-Control" content="no-cache, must-revalidate">
+		<link rel="shortcut icon" href="../images/logo.ico">
+		<link rel="icon" href="../images/logo.ico">
+		<style>
+			body,
+			ul,
+			li {
+				margin: 0px;
+				padding: 0px;
+				list-style: none;
+				font-size: 12px;
+			}
+			
+			body {
+				margin: 100px 20%;
+			}
+			.hljs.objectivec{
+				overflow-x: overlay;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h1 class="title" style="font-size: 34px; margin-bottom: 0px; font-family: -apple-system, &quot;SF UI Display&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-weight: 700; line-height: 1.3; color: rgb(51, 51, 51); caret-color: rgb(51, 51, 51); text-size-adjust: auto; word-break: break-word !important;">JS点击下载跳转IOS或者Android</h1>
+		<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto; word-break: break-word !important;">在移动wap上，最常见的就是引流用户下载安装自己的应用程序，如何通过js点击判断下载是ios还是安卓呢？其实很简单，就是要判断用户的设备是iOS还是Android，然后分别跳转就可以了。·</p>
+		<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto; word-break: break-word !important;">有了这个判断，就可以根据对应的平台来进行操作。·<br>1.安卓的，就直接下载app，或者跳到安卓应用市场下载<br>2.iOS的，直接跳到苹果商店的应用页进行下载<br>3.其它平台，跳到自定义的页面，比如一个放有多个平台的下载页</p>
+		<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto; word-break: break-word !important;">废话不多说，直接上代码</p><pre class="hljs javascript" style="padding: 15px; margin-bottom: 20px; line-height: 1.42857; overflow-wrap: normal; color: rgb(171, 178, 191); background-color: rgb(40, 44, 52); text-size-adjust: auto; word-break: break-word !important;"><code class="javascript" style="font-size: 13px; white-space: pre; border: none; vertical-align: middle;"><span class="hljs-function"><span class="hljs-keyword" style="color: rgb(198, 120, 221);">function</span> <span class="hljs-title" style="color: rgb(97, 174, 238);">downApp</span>(<span class="hljs-params"></span>)</span>{
+    <span class="hljs-keyword" style="color: rgb(198, 120, 221);">var</span> u = navigator.userAgent, 
+    isAndroid = u.indexOf(<span class="hljs-string" style="color: rgb(152, 195, 121);">'Android'</span>) &gt; <span class="hljs-number" style="color: rgb(209, 154, 102);">-1</span> || u.indexOf(<span class="hljs-string" style="color: rgb(152, 195, 121);">'Adr'</span>) &gt; <span class="hljs-number" style="color: rgb(209, 154, 102);">-1</span>,
+    isiOS = !!u.match(<span class="hljs-regexp" style="color: rgb(152, 195, 121);">/\(i[^;]+;( U;)? CPU.+Mac OS X/</span>),
+    urls = {
+        <span class="hljs-string" style="color: rgb(152, 195, 121);">'android'</span>:<span class="hljs-string" style="color: rgb(152, 195, 121);">'http://21231231.apk'</span>,
+        <span class="hljs-string" style="color: rgb(152, 195, 121);">'ios'</span>:<span class="hljs-string" style="color: rgb(152, 195, 121);">'https://itunes.apple.com/cn/app/21231231/id 21231231'</span>,
+        <span class="hljs-string" style="color: rgb(152, 195, 121);">'other'</span>:<span class="hljs-string" style="color: rgb(152, 195, 121);">'http://21231231/index.html'</span>
+    };
+    <span class="hljs-comment" style="color: rgb(146, 146, 146);">//三元运算</span>
+    <span class="hljs-comment" style="color: rgb(146, 146, 146);">// window.location.href = isAndroid? urls.android : isiOS? urls.ios : urls.other;</span>
+    <span class="hljs-comment" style="color: rgb(146, 146, 146);">//简化</span>
+    <span class="hljs-keyword" style="color: rgb(198, 120, 221);">if</span>(isAndroid){
+        <span class="hljs-built_in" style="color: rgb(230, 192, 123);">window</span>.location.href=urls.android;
+    }<span class="hljs-keyword" style="color: rgb(198, 120, 221);">else</span> <span class="hljs-keyword" style="color: rgb(198, 120, 221);">if</span>(isiOS){
+        <span class="hljs-built_in" style="color: rgb(230, 192, 123);">window</span>.location.href=urls.ios;
+    }<span class="hljs-keyword" style="color: rgb(198, 120, 221);">else</span>{
+        <span class="hljs-built_in" style="color: rgb(230, 192, 123);">window</span>.location.href=urls.other;
+    }
+}
+downApp();
+</code></pre>
+		<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto; word-break: break-word !important;">你可以直接把这个函数放在一个按钮或者链接上，点击触发这个事件。就能实现js点击跳转到适合手机的设备了。</p><pre class="hljs xml" style="padding: 15px; margin-bottom: 20px; line-height: 1.42857; overflow-wrap: normal; color: rgb(171, 178, 191); background-color: rgb(40, 44, 52); text-size-adjust: auto; word-break: break-word !important;"><code class="xml" style="font-size: 13px; white-space: pre; border: none; vertical-align: middle;"><span class="hljs-tag">&lt;<span class="hljs-name" style="color: rgb(224, 108, 117);">a</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">href</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"javascript:void(0)"</span> <span class="hljs-attr" style="color: rgb(209, 154, 102);">onclick</span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"downApp()"</span>&gt;</span>点击下载应用<span class="hljs-tag">&lt;/<span class="hljs-name" style="color: rgb(224, 108, 117);">a</span>&gt;</span>
+</code></pre>
+		<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto; word-break: break-word !important;">记得修改一下上面应用的链接地址，设置对应的路径🤗</p>
+	</body>
+
+</html>

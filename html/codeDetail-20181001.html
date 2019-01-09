@@ -1,0 +1,70 @@
+<html lang="zh-cn">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="renderer" content="webkit">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>ANSON思维</title>
+		<meta name="keywords" content="ANSON,思维,ANSON思维,IOS,ios,h5,Jquery,博客,文档,分享">
+		<meta name="description" content="前端开发，textarea自适应高度">
+		<meta name="baidu-site-verification" content="4IXNpgHm1T" />
+		<meta http_equiv="pragma" content="no-cache">
+		<meta http_equiv="Cache-Control" content="no-cache, must-revalidate">
+		<link rel="shortcut icon" href="../images/logo.ico">
+		<link rel="icon" href="../images/logo.ico">
+		<style>
+			body,
+			ul,
+			li {
+				margin: 0px;
+				padding: 0px;
+				list-style: none;
+				font-size: 12px;
+			}
+			
+			body {
+				margin: 100px 20%;
+			}
+		</style>
+	</head>
+
+
+	<body>
+		<h1 class="title" style="font-size: 34px; margin-bottom: 0px; font-family: -apple-system, &quot;SF UI Display&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-weight: 700; line-height: 1.3; color: rgb(51, 51, 51); caret-color: rgb(51, 51, 51); text-size-adjust: auto; word-break: break-word !important;">前端开发——textarea自适应高度</h1>
+		<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto; word-break: break-word !important;">因为textarea不支持自适应高度，就是定好高度或者是行数之后，超出部分就会显示滚动条，看起来不美观。</p>
+		<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto; word-break: break-word !important;">而用DIV来模拟时，首先遇到的问题是：div怎么实现输入功能？</p>
+		<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto; word-break: break-word !important;">可能我们还是第一次见到这个属性contenteditable，如一个普通的block元素上加个contenteditable="true"就实现编辑，出现光标了。如</p><pre class="hljs javascript" style="padding: 15px; margin-bottom: 20px; line-height: 1.42857; overflow-wrap: normal; color: rgb(171, 178, 191); background-color: rgb(40, 44, 52); text-size-adjust: auto; word-break: break-word !important;"><code class="javascript" style="font-size: 13px; white-space: pre; border: none; vertical-align: middle;">&lt;div contenteditable=<span class="hljs-string" style="color: rgb(152, 195, 121);">"true"</span>&gt;<span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name" style="color: rgb(224, 108, 117);">div</span>&gt;</span></span>
+</code></pre>
+		<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto; word-break: break-word !important;">contenteditable属性虽是
+			<a href="http://lib.csdn.net/base/html5" target="_blank" rel="nofollow" style="color: rgb(49, 148, 208); cursor: pointer;">HTML5</a>里面的内容，但是IE似乎老早就支持此标签属性了。所以，兼容性方面还是不用太担心的。</p>
+		<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto; word-break: break-word !important;">CSS代码</p><pre class="hljs css" style="padding: 15px; margin-bottom: 20px; line-height: 1.42857; overflow-wrap: normal; color: rgb(171, 178, 191); background-color: rgb(40, 44, 52); text-size-adjust: auto; word-break: break-word !important;"><code class="css" style="font-size: 13px; white-space: pre; border: none; vertical-align: middle;"><span class="hljs-selector-class" style="color: rgb(209, 154, 102);">.textarea</span>{
+    <span class="hljs-attribute" style="color: rgb(152, 195, 121);">width</span>: <span class="hljs-number" style="color: rgb(209, 154, 102);">400px</span>;
+    <span class="hljs-attribute" style="color: rgb(152, 195, 121);">min-height</span>: <span class="hljs-number" style="color: rgb(209, 154, 102);">20px</span>;
+    <span class="hljs-attribute" style="color: rgb(152, 195, 121);">max-height</span>: <span class="hljs-number" style="color: rgb(209, 154, 102);">300px</span>;
+    <span class="hljs-attribute" style="color: rgb(152, 195, 121);">_height</span>: <span class="hljs-number" style="color: rgb(209, 154, 102);">120px</span>;
+    <span class="hljs-attribute" style="color: rgb(152, 195, 121);">margin-left</span>: auto;
+    <span class="hljs-attribute" style="color: rgb(152, 195, 121);">margin-right</span>: auto;
+    <span class="hljs-attribute" style="color: rgb(152, 195, 121);">padding</span>: <span class="hljs-number" style="color: rgb(209, 154, 102);">3px</span>;
+    <span class="hljs-attribute" style="color: rgb(152, 195, 121);">outline</span>: <span class="hljs-number" style="color: rgb(209, 154, 102);">0</span>;
+    <span class="hljs-attribute" style="color: rgb(152, 195, 121);">border</span>: <span class="hljs-number" style="color: rgb(209, 154, 102);">1px</span> solid <span class="hljs-number" style="color: rgb(209, 154, 102);">#a0b3d6</span>;
+    <span class="hljs-attribute" style="color: rgb(152, 195, 121);">font-size</span>: <span class="hljs-number" style="color: rgb(209, 154, 102);">12px</span>;
+    <span class="hljs-attribute" style="color: rgb(152, 195, 121);">line-height</span>: <span class="hljs-number" style="color: rgb(209, 154, 102);">24px</span>;
+    <span class="hljs-attribute" style="color: rgb(152, 195, 121);">padding</span>: <span class="hljs-number" style="color: rgb(209, 154, 102);">2px</span>;
+    <span class="hljs-attribute" style="color: rgb(152, 195, 121);">word-wrap</span>: break-word;
+    <span class="hljs-attribute" style="color: rgb(152, 195, 121);">overflow-x</span>: hidden;
+    <span class="hljs-attribute" style="color: rgb(152, 195, 121);">overflow-y</span>: auto;
+ 
+    <span class="hljs-attribute" style="color: rgb(152, 195, 121);">border-color</span>: <span class="hljs-built_in" style="color: rgb(230, 192, 123);">rgba</span>(82, 168, 236, 0.8);
+    <span class="hljs-attribute" style="color: rgb(152, 195, 121);">box-shadow</span>: inset <span class="hljs-number" style="color: rgb(209, 154, 102);">0</span> <span class="hljs-number" style="color: rgb(209, 154, 102);">1px</span> <span class="hljs-number" style="color: rgb(209, 154, 102);">3px</span> <span class="hljs-built_in" style="color: rgb(230, 192, 123);">rgba</span>(0, 0, 0, 0.1), <span class="hljs-number" style="color: rgb(209, 154, 102);">0</span> <span class="hljs-number" style="color: rgb(209, 154, 102);">0</span> <span class="hljs-number" style="color: rgb(209, 154, 102);">8px</span> <span class="hljs-built_in" style="color: rgb(230, 192, 123);">rgba</span>(82, 168, 236, 0.6);
+}
+</code></pre>
+		<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto; word-break: break-word !important;">HTML代码</p><pre class="hljs javascript" style="padding: 15px; margin-bottom: 20px; line-height: 1.42857; overflow-wrap: normal; color: rgb(171, 178, 191); background-color: rgb(40, 44, 52); text-size-adjust: auto; word-break: break-word !important;"><code class="javascript" style="font-size: 13px; white-space: pre; border: none; vertical-align: middle;">&lt;div <span class="hljs-class"><span class="hljs-keyword" style="color: rgb(198, 120, 221);">class</span></span>=<span class="hljs-string" style="color: rgb(152, 195, 121);">"textarea"</span> contenteditable=<span class="hljs-string" style="color: rgb(152, 195, 121);">"true"</span>&gt;<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name" style="color: rgb(224, 108, 117);">br</span> /&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name" style="color: rgb(224, 108, 117);">div</span>&gt;</span></span>
+</code></pre>
+		<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 16px; text-size-adjust: auto; word-break: break-word !important;">demo演示地址：
+			<a href="http://www.xuanfengge.com/demo/201308/textarea/demo1.html" target="_blank" rel="nofollow" style="color: rgb(49, 148, 208); cursor: pointer;">http://www.xuanfengge.com/demo/201308/textarea/demo1.html</a>
+		</p>
+		<p style="font-size: 34px; margin-bottom: 0px; font-family: -apple-system, &quot;SF UI Display&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-weight: 700; line-height: 1.3; color: rgb(51, 51, 51); caret-color: rgb(51, 51, 51); text-size-adjust: auto; word-break: break-word !important;"><br></p>
+	</body>
+
+</html>
