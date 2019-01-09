@@ -1,0 +1,224 @@
+<html lang="zh-cn">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="renderer" content="webkit">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>ANSON思维</title>
+		<meta name="keywords" content="ANSON,思维,ANSON思维,IOS,ios,h5,Jquery,博客,文档,分享">
+		<meta name="description" content="ios&html5混合开发优化">
+		<meta name="baidu-site-verification" content="4IXNpgHm1T" />
+		<meta http_equiv="pragma" content="no-cache">
+		<meta http_equiv="Cache-Control" content="no-cache, must-revalidate">
+		<link rel="shortcut icon" href="../images/logo.ico">
+		<link rel="icon" href="../images/logo.ico">
+		<style>
+			body,
+			ul,
+			li {
+				margin: 0px;
+				padding: 0px;
+				list-style: none;
+				font-size: 12px;
+			}
+			
+			body {
+				margin: 100px 20%;
+			}
+			.hljs.objectivec,.hljs.xml,.hljs.javascript{
+				overflow-x: overlay;
+			}
+		</style>
+	</head>
+
+	<body>
+		<h1 class="title" style="font-size: 34px; margin-bottom: 0px; font-family: -apple-system, &quot;SF UI Display&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-weight: 700; line-height: 1.3; color: rgb(51, 51, 51); caret-color: rgb(51, 51, 51); text-size-adjust: auto; word-break: break-word !important;">ios&amp;html5混合开发优化（一）</h1>
+		<div id="free-reward-panel" class="support-author" style="min-height: 144px; padding: 20px 0px; text-align: center; clear: both; caret-color: rgb(51, 51, 51); color: rgb(51, 51, 51); font-family: -apple-system, &quot;SF UI Text&quot;, Arial, &quot;PingFang SC&quot;, &quot;Hiragino Sans GB&quot;, &quot;Microsoft YaHei&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 17px; text-size-adjust: auto;">
+			<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-size: 16px; text-align: start; text-size-adjust: auto; word-break: break-word !important;">前言：本人原本是ios开发工程师，但由于现今H5的兴起，行内刮起了一阵混合开发的风气，趁着这股劲，我也学了前端开发，不说研究的多深，但也能胜任日常的开发工作。长话短说，现今的混合开发应该还处于摸索阶段，我们的项目主要页面都是由网页做的，只有一些IM、支付、分享、推送、上传照片这些用的是原生功能，大家都知道ios原生app的体验一直是很好的，现在改成了混合开发，无疑中就有些舍弃了ios原生的用户体验，而这个作为一个向来以用户体验为先的开发人员来说，这个真的是难以忍受，所以开始了以优化用户体验的为目标的各种尝试。</p>
+			<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-size: 16px; text-align: start; text-size-adjust: auto; word-break: break-word !important;">优化页面跳转功能</p>
+			<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-size: 16px; text-align: start; text-size-adjust: auto; word-break: break-word !important;">app中的翻页常用的分为两类，一种通过导航，一种直接跳</p>
+			<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-size: 16px; text-align: start; text-size-adjust: auto; word-break: break-word !important;">1、第一种 直接跳转 思路大致就是new一个目的页面，然后设置下页面跳转动画 中间还可以做点目的页面的数据初始化:</p><pre class="hljs objectivec" style="padding: 15px; margin-bottom: 20px; line-height: 1.42857; overflow-wrap: normal; color: rgb(171, 178, 191); background-color: rgb(40, 44, 52); text-align: start; text-size-adjust: auto; word-break: break-word !important;"><code class="objectivec" style="font-size: 13px; white-space: pre; border: none; vertical-align: middle;">ValueInputView *valueView = [[ValueInputView alloc] initWithNibName:<span class="hljs-string" style="color: rgb(152, 195, 121);">@"ValueInputView"</span>bundle:[<span class="hljs-built_in" style="color: rgb(230, 192, 123);">NSBundle</span> mainBundle]];
+
+valueView.delegate = <span class="hljs-keyword" style="color: rgb(198, 120, 221);">self</span>;
+
+[valueView setModalTransitionStyle:<span class="hljs-built_in" style="color: rgb(230, 192, 123);">UIModalTransitionStyleCoverVertical</span>];
+
+[<span class="hljs-keyword" style="color: rgb(198, 120, 221);">self</span> presentModalViewController:valueView animated:<span class="hljs-literal" style="color: rgb(86, 182, 194);">YES</span>];
+
+<span class="hljs-comment" style="color: rgb(146, 146, 146);">//返回</span>
+
+[<span class="hljs-keyword" style="color: rgb(198, 120, 221);">self</span> dismissModalViewControllerAnimated:<span class="hljs-literal" style="color: rgb(86, 182, 194);">YES</span>];
+</code></pre>
+			<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-size: 16px; text-align: start; text-size-adjust: auto; word-break: break-word !important;">2、利用UINavigationController，调用pushViewController，进行跳转；这种采用压栈和出栈的方式，进行Controller的管理。调用popViewControllerAnimated方法可以返回</p><pre class="hljs objectivec" style="padding: 15px; margin-bottom: 20px; line-height: 1.42857; overflow-wrap: normal; color: rgb(171, 178, 191); background-color: rgb(40, 44, 52); text-align: start; text-size-adjust: auto; word-break: break-word !important;"><code class="objectivec" style="font-size: 13px; white-space: pre; border: none; vertical-align: middle;">PickImageViewController *ickImageViewController = [[PickImageViewController alloc] init];
+
+[<span class="hljs-keyword" style="color: rgb(198, 120, 221);">self</span>.navigationController pushViewController: ickImageViewController animated:<span class="hljs-literal" style="color: rgb(86, 182, 194);">true</span>];
+</code></pre>
+			<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-size: 16px; text-align: start; text-size-adjust: auto; word-break: break-word !important;">而我们在网页中的跳转就很直接，一个webview中转换不同的URL，很明显这样的方法呈现给用户的体验很差，所以得想办法去优化，最好的解决办法就是去模仿原生的页面跳转。为此我查看了很多的知名app，但我发现大多数混合开发的app都只是某几个页面用的是网页开发，然后再webview所在页面加上进度条，所以给用户感觉不是很突兀，比如饿了么之类的。但这很明显不适用于我们的APP，所以我当时想的是这样做的，加载一个UIScrollView,然后在ScrollView上去添加webview，每点击一次webview里面的跳转时，生成一个新的webview添加在第二屏的位置，以此类推每次进入新页面都可以用这种方式。</p><pre class="hljs objectivec" style="padding: 15px; margin-bottom: 20px; line-height: 1.42857; overflow-wrap: normal; color: rgb(171, 178, 191); background-color: rgb(40, 44, 52); text-align: start; text-size-adjust: auto; word-break: break-word !important;"><code class="objectivec" style="font-size: 13px; white-space: pre; border: none; vertical-align: middle;"><span class="hljs-comment" style="color: rgb(146, 146, 146);">//初始化页面的操作</span>
+
+-(<span class="hljs-keyword" style="color: rgb(198, 120, 221);">void</span>)initView{
+
+_scrollView = [[<span class="hljs-built_in" style="color: rgb(230, 192, 123);">UIScrollView</span> alloc]initWithFrame:<span class="hljs-built_in" style="color: rgb(230, 192, 123);">CGRectMake</span>(<span class="hljs-number" style="color: rgb(209, 154, 102);">0</span>, <span class="hljs-number" style="color: rgb(209, 154, 102);">20</span>, kWidth, kHeight<span class="hljs-number" style="color: rgb(209, 154, 102);">-20</span>)];
+
+_scrollView.backgroundColor = [<span class="hljs-built_in" style="color: rgb(230, 192, 123);">UIColor</span> whiteColor];
+
+_scrollView.contentSize = <span class="hljs-built_in" style="color: rgb(230, 192, 123);">CGSizeMake</span>(<span class="hljs-number" style="color: rgb(209, 154, 102);">60</span>*kWidth, kHeight);
+
+_scrollView.pagingEnabled = <span class="hljs-literal" style="color: rgb(86, 182, 194);">YES</span>;
+
+_scrollView.scrollEnabled = <span class="hljs-literal" style="color: rgb(86, 182, 194);">NO</span>;
+
+_scrollView.bounces = <span class="hljs-literal" style="color: rgb(86, 182, 194);">NO</span>;
+
+<span class="hljs-comment" style="color: rgb(146, 146, 146);">//隐藏水平滚动条</span>
+
+_scrollView.showsHorizontalScrollIndicator = <span class="hljs-literal" style="color: rgb(86, 182, 194);">NO</span>;
+
+<span class="hljs-comment" style="color: rgb(146, 146, 146);">//隐藏垂直滚动条</span>
+
+_scrollView.showsVerticalScrollIndicator = <span class="hljs-literal" style="color: rgb(86, 182, 194);">NO</span>;
+
+_scrollView.contentOffset = <span class="hljs-built_in" style="color: rgb(230, 192, 123);">CGPointMake</span>(<span class="hljs-number" style="color: rgb(209, 154, 102);">0</span>, <span class="hljs-number" style="color: rgb(209, 154, 102);">0</span>);
+
+<span class="hljs-comment" style="color: rgb(146, 146, 146);">//创建初始的WebView</span>
+
+_myWebView = [[<span class="hljs-built_in" style="color: rgb(230, 192, 123);">UIWebView</span> alloc]initWithFrame:<span class="hljs-built_in" style="color: rgb(230, 192, 123);">CGRectMake</span>(<span class="hljs-number" style="color: rgb(209, 154, 102);">0</span>, <span class="hljs-number" style="color: rgb(209, 154, 102);">0</span>, kWidth, kHeight<span class="hljs-number" style="color: rgb(209, 154, 102);">-20</span>)];
+
+_myWebView.backgroundColor = [<span class="hljs-built_in" style="color: rgb(230, 192, 123);">UIColor</span> grayColor];
+
+<span class="hljs-comment" style="color: rgb(146, 146, 146);">//地址是我乱写的</span>
+
+<span class="hljs-built_in" style="color: rgb(230, 192, 123);">NSString</span> *urlString = <span class="hljs-string" style="color: rgb(152, 195, 121);">@"http://www.baidu.com"</span>
+
+<span class="hljs-built_in" style="color: rgb(230, 192, 123);">NSURL</span> *url = [<span class="hljs-built_in" style="color: rgb(230, 192, 123);">NSURL</span> URLWithString:urlString];
+
+<span class="hljs-built_in" style="color: rgb(230, 192, 123);">NSURLRequest</span> *request = [<span class="hljs-built_in" style="color: rgb(230, 192, 123);">NSURLRequest</span> requestWithURL:url];
+
+_myWebView.scrollView.bounces = <span class="hljs-literal" style="color: rgb(86, 182, 194);">NO</span>;
+
+_myWebView.scalesPageToFit = <span class="hljs-literal" style="color: rgb(86, 182, 194);">NO</span>;
+
+_myWebView.delegate = <span class="hljs-keyword" style="color: rgb(198, 120, 221);">self</span>;
+
+[_myWebView loadRequest:request];
+
+[<span class="hljs-keyword" style="color: rgb(198, 120, 221);">self</span>.scrollView addSubview:_myWebView];
+
+[<span class="hljs-keyword" style="color: rgb(198, 120, 221);">self</span>.view addSubview:_scrollView];
+
+<span class="hljs-comment" style="color: rgb(146, 146, 146);">//执行交互操作</span>
+
+[<span class="hljs-keyword" style="color: rgb(198, 120, 221);">self</span> mutualOCwithJS];
+
+}
+
+</code></pre><pre class="hljs objectivec" style="padding: 15px; margin-bottom: 20px; line-height: 1.42857; overflow-wrap: normal; color: rgb(171, 178, 191); background-color: rgb(40, 44, 52); text-align: start; text-size-adjust: auto; word-break: break-word !important;"><code class="objectivec" style="font-size: 13px; white-space: pre; border: none; vertical-align: middle;"><span class="hljs-comment" style="color: rgb(146, 146, 146);">//进入下一页</span>
+-(<span class="hljs-keyword" style="color: rgb(198, 120, 221);">void</span>)nextWeb{
+    
+    <span class="hljs-comment" style="color: rgb(146, 146, 146);">//翻页动效</span>
+    <span class="hljs-built_in" style="color: rgb(230, 192, 123);">CGPoint</span> offSet = <span class="hljs-keyword" style="color: rgb(198, 120, 221);">self</span>.scrollView.contentOffset;
+    <span class="hljs-comment" style="color: rgb(146, 146, 146);">//在新页面里创建webview</span>
+    <span class="hljs-built_in" style="color: rgb(230, 192, 123);">UIWebView</span> *webView = [[<span class="hljs-built_in" style="color: rgb(230, 192, 123);">UIWebView</span> alloc]initWithFrame:<span class="hljs-built_in" style="color: rgb(230, 192, 123);">CGRectMake</span>(offSet.x+kWidth, <span class="hljs-number" style="color: rgb(209, 154, 102);">0</span>, kWidth, kHeight<span class="hljs-number" style="color: rgb(209, 154, 102);">-20</span>)];
+    webView.backgroundColor = [<span class="hljs-built_in" style="color: rgb(230, 192, 123);">UIColor</span> grayColor];
+    <span class="hljs-built_in" style="color: rgb(230, 192, 123);">NSString</span> *urlString = _urlWeb;
+    <span class="hljs-built_in" style="color: rgb(230, 192, 123);">NSURL</span> *url = [<span class="hljs-built_in" style="color: rgb(230, 192, 123);">NSURL</span> URLWithString:urlString];
+    _lastoffset = offSet.x;
+    <span class="hljs-built_in" style="color: rgb(230, 192, 123);">NSURLRequest</span> *request = [<span class="hljs-built_in" style="color: rgb(230, 192, 123);">NSURLRequest</span> requestWithURL:url];
+    
+    webView.scrollView.bounces = <span class="hljs-literal" style="color: rgb(86, 182, 194);">NO</span>;
+    webView.scalesPageToFit = <span class="hljs-literal" style="color: rgb(86, 182, 194);">YES</span>;
+    webView.delegate = <span class="hljs-keyword" style="color: rgb(198, 120, 221);">self</span>;
+    [webView loadRequest:request];
+    
+    [<span class="hljs-keyword" style="color: rgb(198, 120, 221);">self</span>.scrollView addSubview:webView];
+    
+    offSet.x += kWidth;
+    [<span class="hljs-keyword" style="color: rgb(198, 120, 221);">self</span>.scrollView setContentOffset:offSet animated:<span class="hljs-literal" style="color: rgb(86, 182, 194);">YES</span>];
+    
+    <span class="hljs-comment" style="color: rgb(146, 146, 146);">//写入字典</span>
+    [_webArray addObject:webView];
+    [_urlArray addObject:urlString];
+    _count++;
+    [_webDict setObject:_webArray[_count] forKey:_urlArray[_count]];
+    
+    <span class="hljs-comment" style="color: rgb(146, 146, 146);">//    [self startAnimation];</span>
+    <span class="hljs-comment" style="color: rgb(146, 146, 146);">//执行交互操作</span>
+    [<span class="hljs-keyword" style="color: rgb(198, 120, 221);">self</span> mutualOCwithJS];
+    
+}
+
+
+</code></pre>
+			<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-size: 16px; text-align: start; text-size-adjust: auto; word-break: break-word !important;">但这种方式带来的问题是内存暴涨，显然还需要优化，于是我想到添加两个数组去分别存储新打开页面的url和webview，</p><pre class="hljs objectivec" style="padding: 15px; margin-bottom: 20px; line-height: 1.42857; overflow-wrap: normal; color: rgb(171, 178, 191); background-color: rgb(40, 44, 52); text-align: start; text-size-adjust: auto; word-break: break-word !important;"><code class="objectivec" style="font-size: 13px; white-space: pre; border: none; vertical-align: middle;"><span class="hljs-comment" style="color: rgb(146, 146, 146);">//初始化数组和字典</span>
+
+_webArray = [[<span class="hljs-built_in" style="color: rgb(230, 192, 123);">NSMutableArray</span> alloc]init];
+
+[_webArray addObject:_myWebView];
+
+_urlArray = [[<span class="hljs-built_in" style="color: rgb(230, 192, 123);">NSMutableArray</span> alloc]init];
+
+[_urlArray addObject:urlString];
+
+_webDict = [<span class="hljs-built_in" style="color: rgb(230, 192, 123);">NSMutableDictionary</span> dictionary];
+
+[_webDict setObject:_webArray[_count] forKey:_urlArray[_count]];
+</code></pre>
+			<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-size: 16px; text-align: start; text-size-adjust: auto; word-break: break-word !important;">当跳转至频道页首页的时候将数组清空，同时把当前位置变为ScrollView的0位置，</p><pre class="hljs objectivec" style="padding: 15px; margin-bottom: 20px; line-height: 1.42857; overflow-wrap: normal; color: rgb(171, 178, 191); background-color: rgb(40, 44, 52); text-align: start; text-size-adjust: auto; word-break: break-word !important;"><code class="objectivec" style="font-size: 13px; white-space: pre; border: none; vertical-align: middle;"><span class="hljs-built_in" style="color: rgb(230, 192, 123);">NSString</span> *resultStr = [webView stringByEvaluatingJavaScriptFromString:<span class="hljs-string" style="color: rgb(152, 195, 121);">@"document.body.getAttribute('data')"</span>];
+    <span class="hljs-comment" style="color: rgb(146, 146, 146);">//页面中含有频道页首页标记</span>
+    <span class="hljs-keyword" style="color: rgb(198, 120, 221);">if</span> (![resultStr isEqualToString:<span class="hljs-string" style="color: rgb(152, 195, 121);">@""</span>]) {
+        
+        <span class="hljs-keyword" style="color: rgb(198, 120, 221);">for</span> (<span class="hljs-keyword" style="color: rgb(198, 120, 221);">int</span> i = <span class="hljs-number" style="color: rgb(209, 154, 102);">0</span>; i&lt;_count; i++) {
+            
+            [_webDict removeObjectForKey:_urlArray[<span class="hljs-number" style="color: rgb(209, 154, 102);">0</span>]];
+            [_webArray[<span class="hljs-number" style="color: rgb(209, 154, 102);">0</span>] stopLoading];
+            [_webArray[<span class="hljs-number" style="color: rgb(209, 154, 102);">0</span>] removeFromSuperview];
+            [_webArray removeObjectAtIndex:<span class="hljs-number" style="color: rgb(209, 154, 102);">0</span>];
+            
+            [_urlArray removeObjectAtIndex:<span class="hljs-number" style="color: rgb(209, 154, 102);">0</span>];
+            
+        }
+        _count = _webArray.count<span class="hljs-number" style="color: rgb(209, 154, 102);">-1</span>;
+        
+    }
+
+</code></pre>
+			<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-size: 16px; text-align: start; text-size-adjust: auto; word-break: break-word !important;">当页面返回时，把数组的最后一个数据移除，</p><pre class="hljs objectivec" style="padding: 15px; margin-bottom: 20px; line-height: 1.42857; overflow-wrap: normal; color: rgb(171, 178, 191); background-color: rgb(40, 44, 52); text-align: start; text-size-adjust: auto; word-break: break-word !important;"><code class="objectivec" style="font-size: 13px; white-space: pre; border: none; vertical-align: middle;"><span class="hljs-comment" style="color: rgb(146, 146, 146);">//返回上一页</span>
+-(<span class="hljs-keyword" style="color: rgb(198, 120, 221);">void</span>)lastWeb{
+    
+    <span class="hljs-comment" style="color: rgb(146, 146, 146);">//翻页动效</span>
+    <span class="hljs-built_in" style="color: rgb(230, 192, 123);">CGPoint</span> offSet = <span class="hljs-keyword" style="color: rgb(198, 120, 221);">self</span>.scrollView.contentOffset;
+    <span class="hljs-keyword" style="color: rgb(198, 120, 221);">if</span> (offSet.x==<span class="hljs-number" style="color: rgb(209, 154, 102);">0</span>) {
+        <span class="hljs-keyword" style="color: rgb(198, 120, 221);">return</span>;
+    }
+    offSet.x -= kWidth;
+    [<span class="hljs-keyword" style="color: rgb(198, 120, 221);">self</span>.scrollView setContentOffset:offSet animated:<span class="hljs-literal" style="color: rgb(86, 182, 194);">YES</span>];
+    
+    
+    <span class="hljs-comment" style="color: rgb(146, 146, 146);">//销毁不用的webView</span>
+    [_webArray[_count] stopLoading];
+    [_webArray[_count] removeFromSuperview];
+    
+    <span class="hljs-comment" style="color: rgb(146, 146, 146);">//删除字典</span>
+    [_webDict removeObjectForKey:_urlArray[_count]];
+    [_webArray removeObjectAtIndex:_count];
+    [_urlArray removeObjectAtIndex:_count];
+    _count--;
+    
+    [<span class="hljs-keyword" style="color: rgb(198, 120, 221);">self</span> mutualOCwithJS];
+    
+}
+
+</code></pre>
+			<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-size: 16px; text-align: start; text-size-adjust: auto; word-break: break-word !important;">这两条措施都有效降低内存损耗，同时保证了app页面跳转的平滑过渡，当然如果想要想原生app中的手势右划返回，我们这个也同样可以完成。</p><pre class="hljs objectivec" style="padding: 15px; margin-bottom: 20px; line-height: 1.42857; overflow-wrap: normal; color: rgb(171, 178, 191); background-color: rgb(40, 44, 52); text-align: start; text-size-adjust: auto; word-break: break-word !important;"><code class="objectivec" style="font-size: 13px; white-space: pre; border: none; vertical-align: middle;"><span class="hljs-comment" style="color: rgb(146, 146, 146);">//滑动手势</span>
+- (<span class="hljs-keyword" style="color: rgb(198, 120, 221);">void</span>)handleSwipes:(<span class="hljs-built_in" style="color: rgb(230, 192, 123);">UISwipeGestureRecognizer</span> *)sender{
+    
+    <span class="hljs-keyword" style="color: rgb(198, 120, 221);">if</span> (sender.direction == <span class="hljs-built_in" style="color: rgb(230, 192, 123);">UISwipeGestureRecognizerDirectionRight</span>) {
+        [<span class="hljs-keyword" style="color: rgb(198, 120, 221);">self</span> lastWeb];
+    }
+}
+</code></pre>
+			<p style="margin-bottom: 25px; caret-color: rgb(47, 47, 47); color: rgb(47, 47, 47); font-size: 16px; text-align: start; text-size-adjust: auto; word-break: break-word !important;">当然，我只是提供我的一种思路，而且我们也是这样做的，可能还会有更好的思路，希望能多补充，共同进步。</p>
+		</div>
+	</body>
+
+</html>
