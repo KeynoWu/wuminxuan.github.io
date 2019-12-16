@@ -1,9 +1,17 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8" />
-<title>爱你哟宝宝</title>
-<meta content="IE=edge" http-equiv="X-UA-Compatible">
+
+<html lang="zh-cn">
+
+
+
+
+	<head>
+
+		<meta charset="utf-8">
+
+		<title>ANSON思维</title>
+
+		<meta content="IE=edge" http-equiv="X-UA-Compatible">
 
 		<meta content="width=device-width, initial-scale=1" name="viewport">
 
@@ -21,167 +29,1123 @@
 
 		<meta http_equiv="Cache-Control" content="no-cache, must-revalidate">
 
-<style type="text/css">
-	html{
-		background:linear-gradient(#0ff 0%,#000 80%);
-	    height: 100%;	
-	}
-	/*最外层容器样式*/
-	.wrap{
-		width: 375px;
-		height: 200px;
-		/*改变左右上下,图片方块移动*/
-		margin: 150px 0;
-		position: relative;
-		
-	}
-	/*包裹所有容器样式*/
-	.cube{
-		width: 200px;
-		height: 200px;
-		margin: 0 auto;
-		transform-style: preserve-3d;
-		transform: rotateX(-30deg) rotateY(-80deg);
-		-webkit-animation: rotate 20s infinite;
-		/*匀速*/
-		animation-timing-function: linear;
-	}
-	@-webkit-keyframes rotate{
-		from{transform: rotateX(0deg) rotateY(0deg);}
-		to{transform: rotateX(360deg) rotateY(360deg);}
-	}
-	.cube div{
-		position: absolute;
-		width: 200px;
-		height: 200px;
-		opacity: 0.8;
-		transition: all .4s;
-	}
-	/*定义所有图片样式*/
-	.pic{
-		width: 200px;
-		height: 200px;
-	}
-	.cube .out_front{
-		transform: rotateY(0deg) translateZ(100px);
-	}
-	.cube .out_back{
-		transform: translateZ(-100px) rotateY(180deg);
-	}
-	.cube .out_left{
-		transform: rotateY(90deg) translateZ(100px);
-	}
-	.cube .out_right{
-		transform: rotateY(-90deg) translateZ(100px);
-	}
-	.cube .out_top{
-		transform: rotateX(90deg) translateZ(100px);
-	}
-	.cube .out_bottom{
-		transform: rotateX(-90deg) translateZ(100px);
-	}
-	/*定义小正方体样式*/
-	.cube span{
-		display: bloack;
-		width: 100px;
-		height: 100px;
-		position: absolute;
-		top: 50px;
-		left: 50px;
-	}
-	.cube .in_pic{
-		width: 100px;
-		height: 100px;
-	}
-	.cube .in_front{
-		transform: rotateY(0deg) translateZ(50px);
-	}
-	.cube .in_back{
-		transform: translateZ(-50px) rotateY(180deg);
-	}
-	.cube .in_left{
-		transform: rotateY(90deg) translateZ(50px);
-	}
-	.cube .in_right{
-		transform: rotateY(-90deg) translateZ(50px);
-	}
-	.cube .in_top{
-		transform: rotateX(90deg) translateZ(50px);
-	}
-	.cube .in_bottom{
-		transform: rotateX(-90deg) translateZ(50px);
-	}
-	/*鼠标移入后样式*/
-	.cube:hover .out_front{
-		transform: rotateY(0deg) translateZ(200px);
-	}
-	.cube:hover .out_back{
-		transform: translateZ(-200px) rotateY(180deg);
-	}
-	.cube:hover .out_left{
-		transform: rotateY(90deg) translateZ(200px);
-	}
-	.cube:hover .out_right{
-		transform: rotateY(-90deg) translateZ(200px);
-	}
-	.cube:hover .out_top{
-		transform: rotateX(90deg) translateZ(200px);
-	}
-	.cube:hover .out_bottom{
-		transform: rotateX(-90deg) translateZ(200px);
-	}
-</style>
-</head>
-<body>
-<!--/*外层最大容器*/-->
-<div class="wrap">
-<!--	/*包裹所有元素的容器*/-->
-<div class="cube">
-	<!--前面图片 -->
-	<div class="out_front">
-		<img src="img/1.jpg"  class="pic">
-	</div>
-	<!--后面图片 -->
-	<div class="out_back">
-		<img src="img/2.jpg"  class="pic">
-	</div>
-	<!--左图片 -->
-	<div class="out_left">
-		<img src="img/3.jpg"  class="pic">
-	</div>
-	<div class="out_right">
-		<img src="img/4.jpg"  class="pic">
-	</div>
-	<div class="out_top">
-		<img src="img/5.jpg"  class="pic">
-	</div>
-	<div class="out_bottom">
-		<img src="img/6.jpg"  class="pic">
-	</div>
-	<!--小正方体 --> 
-	<span class="in_front">
-		<img src="img/7.jpg" class="in_pic" />
-	</span>
-	<span class="in_back">
-		 <img src="img/8.jpg" class="in_pic" />
-	</span>
-	<span class="in_left">
-		<img src="img/9.jpg" class="in_pic" />
-	</span>
-	<span class="in_right">
-		<img src="img/10.jpg" class="in_pic" />
-	</span>
-	<span class="in_top">
-		<img src="img/11.jpg" class="in_pic" />
-	</span>
-	<span class="in_bottom">
-		<img src="img/12.jpg" class="in_pic" />
-	</span>
-</div>
+		<!--styles-->
+
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+
+		<link href="css/owl.carousel.css" rel="stylesheet">
+
+		<link href="css/owl.theme.css" rel="stylesheet">
+
+		<link href="css/magnific-popup.css" rel="stylesheet">
+
+		<link href="css/style.css" rel="stylesheet">
+
+		<link href="css/responsive.css" rel="stylesheet">
+
+
+
+
+		<!--fonts google-->
+
+		<link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,700' rel='stylesheet' type='text/css'>
+
+		<link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500,700' rel='stylesheet' type='text/css'>
+
+
+
+
+		<!--[if lt IE 9]>
+
+   <script type="text/javascript" src="js/html5shiv.min.js"></script>
+
+<![endif]-->
+
+	</head>
+
+
+
+
+	<body>
+
+		<!--PRELOADER-->
+
+		<div id="preloader">
+
+			<div id="status">
+
+				<img alt="logo" src="images/logo-big.png">
+
+			</div>
+
+		</div>
+
+		<!--/.PRELOADER END-->
+
+
+
+
+		<!--HEADER -->
+
+		<div class="header">
+
+			<div class="for-sticky">
+
+				<!--LOGO-->
+
+				<div class="col-md-2 col-xs-6 logo">
+
+					<a href="index.html"><img alt="logo" class="logo-nav" src="images/logo.png"></a>
+
+				</div>
+
+				<!--/.LOGO END-->
+
+			</div>
+
+			<div class="menu-wrap">
+
+				<nav class="menu">
+
+					<div class="menu-list">
+
+						<a data-scroll="" href="#home" class="active">
+
+							<span>Home</span>
+
+						</a>
+
+						<a data-scroll="" href="#employement">
+
+							<span>Blog</span>
+
+						</a>
+
+						<a data-scroll="" href="#work">
+
+							<span>Mood diary</span>
+
+						</a>
+
+						<a data-scroll="" href="#about">
+
+							<span>About</span>
+
+						</a>
+
+					</div>
+
+				</nav>
+
+				<button class="close-button" id="close-button">Close Menu</button>
+
+			</div>
+
+			<button class="menu-button" id="open-button">
+
+	<span></span>
+
+	<span></span>
+
+	<span></span>
+
+  </button>
+
+			<!--/.for-sticky-->
+
+		</div>
+
+		<!--/.HEADER END-->
+
+
+
+
+		<!--CONTENT WRAP-->
+
+		<div class="content-wrap">
+
+			<!--CONTENT-->
+
+			<div class="content">
+
+				<!--HOME-->
+
+				<section id="home">
+
+					<div class="container">
+
+						<div class="row">
+
+							<div class="wrap-hero-content">
+
+								<div class="hero-content">
+
+									<h1>Hello</h1>
+
+									<br>
+
+									<span class="typed"></span>
+
+								</div>
+
+							</div>
+
+							<div class="mouse-icon margin-20">
+
+								<div class="scroll"></div>
+
+							</div>
+
+						</div>
+
+					</div>
+
+				</section>
+
+				<!--/.HOME END-->
+
+				<!--EMPLOYEMENT-->
+
+				<section class="grey-bg" id="employement">
+
+					<div class="container">
+
+						<div class="row">
+
+							<div class="col-md-3">
+
+								<h3 class="title-small">
+
+			  <span>Blog</span>
+
+			</h3>
+
+								<p class="content-detail">
+
+									真正不羁的灵魂不会真的去计较什么，因为他们的内心深处有国王般的骄傲。<br><br>——杰克·凯鲁亚克 《在路上》<br><br><br><br><br><br>栀子花粗粗大大，又香得掸都掸不开，于是为文雅人不取，以为品格不高。栀子花说：“去你妈的，我就是要这样香，香得痛痛快快，你们他妈的管得着吗！”<br><br> ——汪曾祺
+
+								</p>
+
+							</div>
+
+							<div class="col-md-9 content-right">
+
+								<div class="row">
+
+									<ul class="listing-item">
+
+										<li>
+
+											<div class="col-md-6 col-sm-6">
+
+												<a href="html/codeDetail-20181202.html">
+
+													<div class="wrap-card">
+
+														<div class="card">
+
+															<h2 class="year">
+
+						  radio单选框的选中与取消
+
+						</h2>
+
+															<p class="job">
+
+																2018/12/02
+
+															</p>
+
+															<hr>
+
+															<div class="text-detail">
+
+																<p>
+
+																	需求： 单选框可重复点击选中和取消； 背景： 单选框只可以选中，取消需要点击其他单选框。 解决方案：
+
+																</p>
+
+															</div>
+
+														</div>
+
+													</div>
+
+												</a>
+
+											</div>
+
+										</li>
+
+
+
+
+										<li>
+
+											<div class="col-md-6 col-sm-6">
+
+												<a href="html/codeDetail-20181112.html">
+
+													<div class="wrap-card">
+
+														<div class="card">
+
+															<h2 class="year">
+
+						  解决在HTTPS页面里嵌套HTTP页面浏览器block的问题
+
+						</h2>
+
+															<p class="job">
+
+																2018/11/12
+
+															</p>
+
+															<hr>
+
+															<div class="text-detail">
+
+																<p>
+
+																	问题描述： 浏览器默认是不允许在HTTPS里面引用HTTP页面的，ie下面会弹出提示框提示是否显示不安全的内容，一般都会弹出提示框，用户确认后...
+
+																</p>
+
+															</div>
+
+														</div>
+
+													</div>
+
+												</a>
+
+											</div>
+
+										</li>
+
+									</ul>
+
+									<ul class="listing-item">
+
+										<li>
+
+											<div class="col-md-6 col-sm-6">
+
+												<a href="html/codeDetail-20181010.html">
+
+													<div class="wrap-card">
+
+														<div class="card">
+
+															<h2 class="year">
+
+						  ios下iframe页面内的input手机输入法bug
+
+						</h2>
+
+															<p class="job">
+
+																2018/10/10
+
+															</p>
+
+															<hr>
+
+															<div class="text-detail">
+
+																<p>
+
+																	苹果手机中运行的页面，在iframe 中 ，手指点击input框，自动弹出键盘后，输入几个文字，然后手指再点击一下input框之后，再在键盘里敲字母，就无法在input框显示所敲入的内容了。解决方案如下：
+
+																</p>
+
+															</div>
+
+														</div>
+
+													</div>
+
+												</a>
+
+											</div>
+
+										</li>
+
+
+
+
+										<li>
+
+											<div class="col-md-6 col-sm-6">
+
+												<a href="html/codeDetail-20181001.html">
+
+													<div class="wrap-card">
+
+														<div class="card">
+
+															<h2 class="year">
+
+						  前端开发——textarea自适应高度
+
+						</h2>
+
+															<p class="job">
+
+																2018/10/01
+
+															</p>
+
+															<hr>
+
+															<div class="text-detail">
+
+																<p>
+
+																	因为textarea不支持自适应高度，就是定好高度或者是行数之后，超出部分就会显示滚动条，看起来不美观。而用DIV来模拟时，首先遇到的问题是：div怎么实现输入功能？ 可能我们还是第一次见到...
+
+																</p>
+
+															</div>
+
+														</div>
+
+													</div>
+
+												</a>
+
+											</div>
+
+										</li>
+
+									</ul>
+
+									<ul class="listing-item">
+
+										<li>
+
+											<div class="col-md-6 col-sm-6">
+
+												<a href="html/codeDetail-20180911.html">
+
+													<div class="wrap-card">
+
+														<div class="card">
+
+															<h2 class="year">
+
+						  IOS开发之qq分享原生接入SDK
+
+						</h2>
+
+															<p class="job">
+
+																2018/09/11
+
+															</p>
+
+															<hr>
+
+															<div class="text-detail">
+
+																<p>
+
+																	写在正文之前：腾讯的qq SDK是真的坑！这个文档简直是我见过最坑的文档了！被逼着接原生SDK做分享的我只能自己去填坑了！！！
+
+																</p>
+
+															</div>
+
+														</div>
+
+													</div>
+
+												</a>
+
+											</div>
+
+										</li>
+
+										<li>
+
+											<div class="col-md-6 col-sm-6">
+
+												<a href="html/codeDetail-20180815.html">
+
+													<div class="wrap-card">
+
+														<div class="card">
+
+															<h2 class="year">
+
+						  JS点击下载跳转IOS或者Android
+
+						</h2>
+
+															<p class="job">
+
+																2018/08/15
+
+															</p>
+
+															<hr>
+
+															<div class="text-detail">
+
+																<p>
+
+																	在移动wap上，最常见的就是引流用户下载安装自己的应用程序，如何通过js点击判断下载是ios还是安卓呢？其实很简单，就是要判断用户的设备是iOS还是Android，然后分别跳转就可以了
+
+																</p>
+
+															</div>
+
+														</div>
+
+													</div>
+
+												</a>
+
+											</div>
+
+										</li>
+
+									</ul>
+
+									<ul class="listing-item">
+
+										<li>
+
+											<div class="col-md-6 col-sm-6">
+
+												<a href="html/codeDetail-20180622.html">
+
+													<div class="wrap-card">
+
+														<div class="card">
+
+															<h2 class="year">
+
+						  ios截屏及保存图片到本地
+
+						</h2>
+
+															<p class="job">
+
+																2018/06/22
+
+															</p>
+
+															<hr>
+
+															<div class="text-detail">
+
+																<p>
+
+																	截取当前屏幕显示的内容，并保存在本地：1、项目添加：Photos.framework，AssetsLibrary.framework；
+
+																</p>
+
+															</div>
+
+														</div>
+
+													</div>
+
+												</a>
+
+											</div>
+
+										</li>
+
+										<li>
+
+											<div class="col-md-6 col-sm-6">
+
+												<a href="html/codeDetail-20180414.html">
+
+													<div class="wrap-card">
+
+														<div class="card">
+
+															<h2 class="year">
+
+						  IOS---将text文本转为image
+
+						</h2>
+
+															<p class="job">
+
+																2018/04/14
+
+															</p>
+
+															<hr>
+
+															<div class="text-detail">
+
+																<p>
+
+																	用代码实现，将一段text文本转为image，可作为标签使用。具体实现方式如下：
+
+																</p>
+
+															</div>
+
+														</div>
+
+													</div>
+
+												</a>
+
+											</div>
+
+										</li>
+
+									</ul>
+
+									<ul class="listing-item">
+
+										<li>
+
+											<div class="col-md-6 col-sm-6">
+
+												<a href="html/codeDetail-20180311.html">
+
+													<div class="wrap-card">
+
+														<div class="card">
+
+															<h2 class="year">
+
+						  前端开发——下拉框（多选、单选、搜索、排序）
+
+						</h2>
+
+															<p class="job">
+
+																2018/03/11
+
+															</p>
+
+															<hr>
+
+															<div class="text-detail">
+
+																<p>
+
+																	需求：需要做一个下拉框组件，要求包含下拉列表前加一个多选框，勾选的列在下次打开时自动排在下拉列表前面置顶，点击列表中某一项，可以选中该项内容，并填充进展示框中，另外需要增加搜索功能，便于筛选下拉列表中的列。
+
+																</p>
+
+															</div>
+
+														</div>
+
+													</div>
+
+												</a>
+
+											</div>
+
+										</li>
+
+										<li>
+
+											<div class="col-md-6 col-sm-6">
+
+												<a href="html/codeDetail-20171209.html">
+
+													<div class="wrap-card">
+
+														<div class="card">
+
+															<h2 class="year">
+
+						  ios&html5混合开发优化（二）
+
+						</h2>
+
+															<p class="job">
+
+																2017/12/09
+
+															</p>
+
+															<hr>
+
+															<div class="text-detail">
+
+																<p>
+
+																	优化oc与js传值：混合开发最大的问题就在于前台与后台直接的通信，这个不像用纯原生开发时数据都从接口处获取然后做想要的操作，混合开发中oc端是没有办法去操作页面的，因为页面是h5做的，这个时候就需要oc与js进行通信。
+
+																</p>
+
+															</div>
+
+														</div>
+
+													</div>
+
+												</a>
+
+											</div>
+
+										</li>
+
+									</ul>
+
+									<ul class="listing-item">
+
+										<li>
+
+											<div class="col-md-6 col-sm-6">
+
+												<a href="html/codeDetail-20170929.html">
+
+													<div class="wrap-card">
+
+														<div class="card">
+
+															<h2 class="year">
+
+						  ios&html5混合开发优化（一）
+
+						<p class="job">
+
+						  2017/09/29
+
+						</p>
+
+						<hr>
+
+						<div class="text-detail">
+
+						  <p>
+
+							前言：本人原本是ios开发工程师，但由于现今H5的兴起，行内刮起了一阵混合开发的风气，趁着这股劲，我也学了前端开发，不说研究的多深，但也能胜任日常的开发工作。长话短说
+
+						  </p>
+
+						</div>
+
+					  </div>
+
+					</div>
+
+					</a>
+
+				  </div>
+
+				</li>		
+
+			  </ul>
+
+
+
+
+			</div>
+
+		  </div>
+
+		</div>
+
+	  </div>
+
+	</section>
+
+	<!--/.EMPLOYEMENT END-->
+
+
+
+
+	<!--WORK-->
+
+	<section class="grey-bg mar-tm-10" id="work">
+
+	  <div class="container">
+
+		<div class="row">
+
+		  <div class="col-md-3">
+
+			<h3 class="title-small">
+
+			  <span>Mood diary</span>
+
+			</h3>
+
+			<p class="content-detail">
+
+			  沈从文说，我走过无数的桥，看过无数的云，喝过无数种类的酒，却只爱过一个正当最好年纪的人，我应当为自己感到庆幸。<br><br>那不幸是什么？<br><br>可能就是一厢情愿地爱着一个人，发现ta并不喜欢你。就算你走过古色古香的桥，看到绵软白洁的云，喝窖藏多年的酒，脸上也不会有半点笑意。<br>再没有一场大雨能打湿你的心，再没有一束光能照进你心里的裂痕，再不会有另一个人能掌握你的呼吸。轻松得好像背上卸下了一个世界，又失落得好像手里失去了一个世界。
+
+			</p>
+
+		  </div>
+
+		  <div class="col-md-9 content-right">
+
+			<!--PORTFOLIO IMAGE-->
+
+			<ul class="portfolio-image">
+
+			  <li class="col-md-6">
+
+				<div><img alt="image" src="images/bw-1.png">
+
+				  <div class="decription-wrap">
+
+				  	<a href="html/poemDetail-20180812.html">
+
+					<div class="image-bg">						
+
+					   <p class="desc">迪士尼打卡</p>					   
+
+					</div>
+
+					</a>
+
+				  </div>
+
+				</div>
+
+			  </li>
+
+			  <li class="col-md-6">
+
+				<a href="images/bw-2.png"><img alt="image" src="images/bw-2.png">
+
+				  <div class="decription-wrap">
+
+				  	<a href="html/poemDetail-20180522.html">
+
+					<div class="image-bg">
+
+					  <p class="desc">
+
+						其实，我享受孤独。
+
+					  </p>
+
+					</div>
+
+					</a>
+
+				  </div>
+
+				</a>
+
+			  </li>
+
+			  <li class="col-md-6">
+
+				<a href="images/bw-3.png"><img alt="image" src="images/bw-3.png">
+
+				  <div class="decription-wrap">
+
+				  	<a href="html/poemDetail-20170309.html">
+
+					<div class="image-bg">
+
+					  <p class="desc">
+
+						回不去的地方。
+
+					  </p>
+
+					</div>
+
+					</a>
+
+				  </div>
+
+				</a>
+
+			  </li>
+
+			  <li class="col-md-6">
+
+				<a href="images/bw-4.png"><img alt="image" src="images/bw-4.png">
+
+				  <div class="decription-wrap">
+
+				  	<a href="">
+
+					<div class="image-bg">
+
+					  <p class="desc">
+
+						如果那两个字没有颤抖
+
+					  </p>
+
+					</div>
+
+					</a>
+
+				  </div>
+
+				</a>
+
+			  </li>
+
+			  
+
+			</ul>
+
+			<!--/.PORTFOLIO IMAGE END-->
+
+		  </div>
+
+		</div>
+
+	  </div>
+
+	</section>
+
+	<!--/.WORK END-->
+
+
+
+
+	
+
+	
+
+	
+
+	<!--TESTIMONIAL-->
+
+	<section id="testimonial">
+
+	  <div class="container">
+
+		<div class="row wrap-testimonial">
+
+		  <div class="col-md-10 col-md-offset-1">
+
+			<div class="owl-carousel">
+
+			  <div class="list-testimonial">
+
+				<div class="content-testimonial">
+
+				  <h3 class="testi">
+
+					“ 你是活了一万多天，还是仅仅生活了一天，却重复了一万多次？ ”
+
+				  </h3>
+
+				  <p class="people">
+
+					佩索阿
+
+				  </p>
+
+				</div>
+
+			  </div>
+
+			  <div class="list-testimonial">
+
+				<div class="content-testimonial">
+
+				  <h3 class="testi">
+
+					“不同的青春，同样的迷惘。然而，青春会成长，迷惘会散去。黑夜过后，太阳照常升起！ ”
+
+				  </h3>
+
+				  <p class="people">
+
+					海明威《太阳照常升起》
+
+				  </p>
+
+				</div>
+
+			  </div>
+
+			  <div class="list-testimonial">
+
+				<div class="content-testimonial">
+
+				  <h3 class="testi">
+
+					“ 你要做一个不动声色的大人了，不准情绪化，不准偷偷想念，不准回头看，去过自己另外的生活，你要听话，不是所有的鱼都生活在同一片海里。 ”
+
+				  </h3>
+
+				  <p class="people">
+
+					村上春树
+
+				  </p>
+
+				</div>
+
+			  </div>
+
+			</div>
+
+		  </div>
+
+		</div>
+
+	  </div>
+
+	  <div class="mask-testimonial"></div>
+
+	</section>
+
+	<!--/.TESTMONIAL END-->
+
+
+
+
+		<!--ABOUT-->
+
+	<section id="about">
+
+	  <div class="col-md-6 col-xs-12 no-pad">
+
+		<div class="bg-about"></div>
+
+	  </div>
+
+	  <div class="col-md-6 col-sm-12 col-xs-12 white-col">
+
+		<div class="row">
+
+		  <!--OWL CAROUSEL2-->
+
+		  <div class="owl-carousel2">
+
+			<div class="col-md-12">
+
+			  <div class="wrap-about">
+
+				<div class="w-content">
+
+				  <p class="head-about">
+
+					不想搞事的产品经理不是好程序猿~<br><br>我是Anson，有信仰，爱生活，<br>毕业3年，现居住于魔都；<br>愿和你一起努力做更好的自己。<br>无论是看书，健身还是搞事。
+
+				 </p>
+
+				</div>
+
+			  </div>
+
+			</div>
+
+		  
+
+			<div class="col-md-12 col-sm-12 col-xs-12 white-col">
+
+			  <div class="row">
+
+				<div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-12">
+
+				  <div class="wrap-about">
+
+					<table class="w-content">
+
+					  <tr>
+
+						<td class="title">Name </td>
+
+						<td class="break">:</td>
+
+						<td>Anson</td>
+
+					  </tr>
+
+					  <tr>
+
+						<td class="title">qq </td>
+
+						<td class="break">:</td>
+
+						<td> 1475776568</td>
+
+					  </tr>
+
+					  <tr>
+
+						<td class="title">Email </td>
+
+						<td class="break">:</td>
+
+						<td> keynowu@163.com</td>
+
+					  </tr>
+
+					
+
+					</table>
+
+				  </div>
+
+				</div>
+
+			  </div>
+
+			</div>
+
+		  </div>
+
+		  <!--/.OWL CAROUSEL2 END-->
+
+		</div>
+
+	  </div>
+
+	</section>
+
+	<!--/.ABOUT END-->
+
+	
+
+  <!--/.CONTENT END-->
+
+  </div>
+
+<!--/.CONTENT-WRAP END-->
+
 </div>
 
-<div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';">
-</div>
+
+
+
+
+
+
+<script src="js/jquery-1.9.1.min.js" type="text/javascript"></script>
+
+<script src="js/jquery.appear.js" type="text/javascript"></script>
+
+<script src="js/bootstrap.min.js" type="text/javascript"></script>
+
+<script src="js/classie.js" type="text/javascript"></script>
+
+<script src="js/owl.carousel.min.js" type="text/javascript"></script>
+
+<script src="js/jquery.magnific-popup.min.js" type="text/javascript"></script>
+
+<script src="js/masonry.pkgd.min.js" type="text/javascript"></script>
+
+<script src="js/masonry.js" type="text/javascript"></script>
+
+<script src="js/smooth-scroll.min.js" type="text/javascript"></script>
+
+<script src="js/typed.js" type="text/javascript"></script>
+
+<script src="js/main.js" type="text/javascript"></script>
+
 </body>
-</html>
 
+</html>
